@@ -16,6 +16,7 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 - Die ausgewählten Blöcke müssen für die tatsächliche Platzierung in der **Hotbar** liegen.
 - `J`: Zufallsplatzierung ein- oder ausschalten.
 - Beim normalen Platzieren wird ausschließlich zwischen den ausgewählten, in der Hotbar vorhandenen Baublöcken gewechselt. Werkzeuge sind von der Auswahl ausgeschlossen.
+- **Auto-Nachfüllen** ist im GUI separat schaltbar (standardmäßig AN). Sobald ein so belegter Hotbar-Slot aufgebraucht ist, holt die Mod den gleichen Blocktyp aus dem Inventar nach. Nur beim Spielen, nicht während offener Inventarfenster. Zu Beginn mindestens einen passenden Blocktyp in die Hotbar legen.
 - Konfiguration: `config/winterfell-random-palette.json`.
 
 ## Downloads und Sicherheit

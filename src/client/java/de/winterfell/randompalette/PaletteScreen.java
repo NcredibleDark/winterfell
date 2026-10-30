@@ -43,6 +43,14 @@ public final class PaletteScreen extends Screen {
                     rebuildWidgets();
                 }).bounds(x + 204, y + 8, 110, 20).build());
 
+        addRenderableWidget(Button.builder(
+                Component.literal(RandomPaletteClient.config.autoRefill ? "§aAuto-Nachfüllen: AN" : "§cAuto-Nachfüllen: AUS"),
+                b -> {
+                    RandomPaletteClient.config.autoRefill = !RandomPaletteClient.config.autoRefill;
+                    RandomPaletteClient.config.save();
+                    rebuildWidgets();
+                }).bounds(x + 199, y + 57, 115, 20).build());
+
         List<String> ids = new ArrayList<>(RandomPaletteClient.config.weights.keySet());
         int pages = Math.max(1, (ids.size() + PER_PAGE - 1) / PER_PAGE);
         page = Math.max(0, Math.min(page, pages - 1));
@@ -117,9 +125,9 @@ public final class PaletteScreen extends Screen {
             }
         }
 
-        graphics.text(font, "Inventar (unten = Hotbar)", x + 200, y + 73, 0xFFE7EDF5);
-        graphics.text(font, "Nur Blöcke in der Hotbar", x + 200, y + 89, 0xFFB4D8F2);
-        graphics.text(font, "werden platziert.", x + 200, y + 101, 0xFFB4D8F2);
+        graphics.text(font, "Inventar-Reserve", x + 200, y + 85, 0xFFE7EDF5);
+        graphics.text(font, "fuellt leere Slots", x + 200, y + 101, 0xFFB4D8F2);
+        graphics.text(font, "mit gleichem Block.", x + 200, y + 114, 0xFFB4D8F2);
         graphics.text(font, "Gewichtung (relativ):", x + 16, y + 145, 0xFFFFFFFF);
 
         List<Map.Entry<String, Integer>> entries = new ArrayList<>(RandomPaletteClient.config.weights.entrySet());

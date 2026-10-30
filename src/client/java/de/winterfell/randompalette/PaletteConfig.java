@@ -22,6 +22,7 @@ public final class PaletteConfig {
             .resolve("winterfell-random-palette.json");
 
     public boolean enabled = false;
+    public boolean autoRefill = true;
     public LinkedHashMap<String, Integer> weights = new LinkedHashMap<>();
 
     public static PaletteConfig load() {
