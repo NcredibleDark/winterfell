@@ -18,6 +18,6 @@ jobs:
       - run: gradle build --stacktrace
       - uses: actions/upload-artifact@v4
         with:
-          name: winterfell-random-palette-26.3
-          path: build/libs/winterfell-random-palette-1.0.0.jar
+          name: winterfell-random-palette-26.3-v1.0.1
+          path: build/libs/winterfell-random-palette-1.0.1.jar
           if-no-files-found: error
