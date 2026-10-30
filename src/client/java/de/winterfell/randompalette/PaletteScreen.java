@@ -81,7 +81,7 @@ public final class PaletteScreen extends Screen {
     // We draw a custom opaque screen rather than asking Minecraft to blur the same
     // GUI stratum a second time. In 26.3 a second blur throws an exception.
     @Override
-    protected void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         // No built-in blur. The panel below provides its own background.
     }
 
