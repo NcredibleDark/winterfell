@@ -30,8 +30,39 @@ public final class PaletteScreen extends Screen {
     private int left() { return (width - PANEL_W) / 2; }
     private int top() { return (height - PANEL_H) / 2; }
 
+    /**
+     * The palette contains only block types that are still in the player's
+     * 36-slot inventory (hotbar included), not historical selections.
+     * Never prune without a loaded player/inventory.
+     */
+    private boolean removeMissingPaletteEntries() {
+        if (minecraft == null || minecraft.player == null || RandomPaletteClient.config == null) return false;
+
+        java.util.Set<String> available = new java.util.HashSet<>();
+        for (int i = 0; i < 36; i++) {
+            ItemStack stack = minecraft.player.getInventory().getItem(i);
+            if (RandomPaletteClient.isSelectable(stack)) {
+                available.add(RandomPaletteClient.itemId(stack));
+            }
+        }
+
+        boolean changed = RandomPaletteClient.config.weights.keySet()
+                .removeIf(id -> !available.contains(id));
+        if (changed) RandomPaletteClient.config.save();
+        return changed;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        // Updates buttons and pagination too if the server changes inventory
+        // while this GUI remains open.
+        if (removeMissingPaletteEntries()) rebuildWidgets();
+    }
+
     @Override
     protected void init() {
+        removeMissingPaletteEntries();
         int x = left();
         int y = top();
 

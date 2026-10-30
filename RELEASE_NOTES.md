@@ -1,22 +1,18 @@
-## Winterfell Random Palette 1.1.0
+## Winterfell Random Palette 1.1.1
 
 Fabric-Client-Mod für Minecraft 26.3 (Java 25).
 
-### Neu in 1.1.0
-- **Auto-Nachfüllen**: Sobald ein ausgewählter Hotbar-Blockstack aufgebraucht ist, wird derselbe Blocktyp aus dem Hauptinventar (27 Plätze) in diesen Hotbar-Slot verschoben.
-- Ein-/Ausschalter **Auto-Nachfüllen** im `K`-Menü, standardmäßig aktiviert.
-- Verwendet ausschließlich normale Minecraft-Inventar-SWAP-Klicks, die vom Server verarbeitet werden; keine Server-Mod erforderlich.
-- Keine Werkzeuge, kein anderer Blocktyp und keine Gegenstände außerhalb der gewählten Palette werden als Baumaterial platziert.
-- Sicherheitsbegrenzung bei Inventartausch und kein automatisches Nachfüllen während geöffneter Inventar-/GUI-Fenster.
+### Fehlerbehebung
+- Die Gewichtungsliste zeigt nur noch ausgewählte Blocktypen, die **wirklich im Spielerinventar oder in der Hotbar (Slots 0–35)** vorhanden sind.
+- Beim Öffnen der Palette und während sie geöffnet ist, werden veraltete Einträge automatisch aus der gespeicherten Auswahl entfernt.
+- Die Seitenzahl und die Plus-/Minus-Schaltflächen werden nach einer Bereinigung neu aufgebaut. Keine leeren Seiten mehr durch längst verbrauchte Blöcke.
+- Gewichtungen noch vorhandener Blöcke bleiben unverändert.
+- Das automatische Hotbar-Nachfüllen aus Version 1.1.0 bleibt erhalten.
 
-### Bedienung
-- `K`: Palettenmenü, Gewichtung und Auto-Nachfüllen.
-- `J`: Zufallsplatzierung ein-/ausschalten.
-- Mindestens einen Stack der ausgewählten Blocktypen zunächst in die Hotbar legen. Weitere passende Stacks können im normalen Inventar liegen.
+### Hinweis
+Blöcke, die nur in Kisten, Shulkerboxen oder der Endertruhe liegen, zählen **nicht** als aktuell im Inventar. Sobald ein Blocktyp komplett aufgebraucht ist und du das Palettenmenü öffnest, wird seine Gewichtung entfernt; beim erneuten Beschaffen musst du ihn bei Bedarf wieder hinzufügen.
 
 ### Installation
-Alte `winterfell-random-palette-1.0.1.jar` entfernen und `winterfell-random-palette-1.1.0.jar` in den `mods`-Ordner legen. Fabric API erforderlich. Kein Server-Plugin nötig.
+Die alte `winterfell-random-palette-1.1.0.jar` aus dem Mod-Ordner entfernen und `winterfell-random-palette-1.1.1.jar` installieren. Fabric API und Java 25 erforderlich, kein Server-Plugin.
 
-SHA-256-Prüfsumme liegt als separate `.jar.sha256` bei. Der Java-/Gradle-Build wurde geprüft; Gameplay-Tests auf mehreren Servern stehen noch aus.
-
-Dieses Release befindet sich in einem privaten GitHub-Repository; für den Download wird entsprechender GitHub-Zugriff benötigt.
+Die SHA-256-Prüfsumme liegt dem GitHub Release bei. GitHub Actions prüft die Kompilierung; Ingame-Test steht noch aus.

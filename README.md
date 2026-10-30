@@ -13,6 +13,7 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 
 - `K`: Auswahl-GUI öffnen.
 - Im GUI Baublöcke aus dem Inventar anklicken und die relativen Gewichte mit `+` / `-` einstellen.
+- Die Gewichtungsliste wird beim Öffnen und während der Anzeige mit dem Inventar abgeglichen: Blöcke, die in keinem der 36 Spielerinventar-Slots mehr vorhanden sind, werden aus der Auswahl gelöscht. Vorhandene Gewichtungen bleiben erhalten.
 - Die ausgewählten Blöcke müssen für die tatsächliche Platzierung in der **Hotbar** liegen.
 - `J`: Zufallsplatzierung ein- oder ausschalten.
 - Beim normalen Platzieren wird ausschließlich zwischen den ausgewählten, in der Hotbar vorhandenen Baublöcken gewechselt. Werkzeuge sind von der Auswahl ausgeschlossen.
@@ -24,7 +25,7 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 Der offizielle Download ist ein **GitHub Release Asset direkt als .jar über HTTPS**, keine temporäre Actions-ZIP. Jede Version hat außerdem eine `.jar.sha256` Prüfsumme.
 Auf Windows lässt sich die Prüfsumme in PowerShell mit `Get-FileHash .\winterfell-random-palette-VERSION.jar -Algorithm SHA256` überprüfen.
 
-Ein GitHub Release ist kein Ersatz für eine Prüfung der Dateien. Chrome kann weiterhin Sicherheitswarnungen anzeigen. Ein privates Repository erfordert zudem GitHub-Anmeldung zum Download.
+Ein GitHub Release ist kein Ersatz für eine Prüfung der Dateien. Chrome kann weiterhin Sicherheitswarnungen anzeigen. Öffentliche Releases können ohne GitHub-Anmeldung heruntergeladen werden.
 
 ## Entwicklung
 
