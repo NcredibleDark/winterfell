@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.phys.BlockHitResult;
 
@@ -32,6 +33,8 @@ public final class RandomPaletteClient implements ClientModInitializer {
     // Slot ownership is remembered after the final block is placed.
     // We never refill a slot if the user has put a different item into it.
     private static final String[] rememberedBlock = new String[9];
+    private static final ItemStack[] rememberedStack = new ItemStack[9];
+    private static int nextInventoryClick = 0;
     private static final int[] retryDelay = new int[9];
     private static Object previousPlayer;
 
@@ -73,21 +76,26 @@ public final class RandomPaletteClient implements ClientModInitializer {
     private static void tickAutoRefill(Minecraft mc) {
         if (mc.player != previousPlayer) {
             Arrays.fill(rememberedBlock, null);
+            Arrays.fill(rememberedStack, null);
             Arrays.fill(retryDelay, 0);
+            nextInventoryClick = 0;
             previousPlayer = mc.player;
         }
         if (mc.player == null || config == null) return;
 
         boolean inventoryScreenOpen = mc.gui.screen() != null;
+        if (nextInventoryClick > 0) nextInventoryClick--;
         // While a screen is open, treat manual inventory rearrangement as intentional.
         for (int slot = 0; slot < 9; slot++) {
             if (retryDelay[slot] > 0) retryDelay[slot]--;
             ItemStack stack = mc.player.getInventory().getItem(slot);
             if (!stack.isEmpty()) {
+                rememberedStack[slot] = stack.isStackable() ? stack.copyWithCount(1) : null;
                 rememberedBlock[slot] = isSelectable(stack) && config.weights.containsKey(itemId(stack))
                         ? itemId(stack) : null;
-            } else if (inventoryScreenOpen || !config.enabled) {
+            } else if (inventoryScreenOpen) {
                 rememberedBlock[slot] = null;
+                rememberedStack[slot] = null;
             }
         }
         if (inventoryScreenOpen) return;
@@ -95,33 +103,84 @@ public final class RandomPaletteClient implements ClientModInitializer {
     }
 
     /**
-     * A server-validated vanilla inventory SWAP, never raw local stack edits.
-     * Inventory menu indexes 9..35 represent the 27 main-inventory stacks;
-     * the SWAP button 0..8 targets exactly one hotbar slot.
+     * The two refill modes are independent:
+     * - generalRefill: any stackable item, but only the same item and components.
+     * - autoRefill: selected palette blocks while random palette is active.
+     * Never touch non-empty hotbar slots or non-stackable tools.
+     * Only vanilla inventory SWAP clicks, validated by the server.
      */
     private static void refillOneSlot(Minecraft mc) {
         if (mc.player == null || mc.gameMode == null || mc.level == null || config == null
-                || !config.enabled || !config.autoRefill || mc.gui.screen() != null
+                || (!config.generalRefill && !(config.enabled && config.autoRefill))
+                || mc.gui.screen() != null || nextInventoryClick > 0
                 || mc.player.containerMenu != mc.player.inventoryMenu) return;
 
         for (int hotbar = 0; hotbar < 9; hotbar++) {
-            String wanted = rememberedBlock[hotbar];
-            if (wanted == null || !config.weights.containsKey(wanted)
-                    || !mc.player.getInventory().getItem(hotbar).isEmpty()
-                    || retryDelay[hotbar] > 0) continue;
+            if (!mc.player.getInventory().getItem(hotbar).isEmpty() || retryDelay[hotbar] > 0) continue;
+            ItemStack wantedStack = config.generalRefill ? rememberedStack[hotbar] : null;
+            String wantedBlock = config.enabled && config.autoRefill ? rememberedBlock[hotbar] : null;
+            boolean hasGeneral = wantedStack != null && !wantedStack.isEmpty()
+                    && wantedStack.isStackable();
+            if (!hasGeneral && wantedBlock == null) continue;
 
             for (int invSlot = 9; invSlot < 36; invSlot++) {
-                ItemStack stack = mc.player.getInventory().getItem(invSlot);
-                if (isSelectable(stack) && itemId(stack).equals(wanted)) {
-                    // Client predicts the same click that the server subsequently validates.
+                ItemStack candidate = mc.player.getInventory().getItem(invSlot);
+                if (candidate.isEmpty()) continue;
+                boolean exactMatch = hasGeneral && ItemStack.isSameItemSameComponents(wantedStack, candidate);
+                boolean paletteMatch = wantedBlock != null && isSelectable(candidate)
+                        && itemId(candidate).equals(wantedBlock);
+                if (exactMatch || paletteMatch) {
                     retryDelay[hotbar] = 10;
+                    nextInventoryClick = 2;
                     mc.gameMode.handleContainerInput(
                             mc.player.containerMenu.containerId,
                             invSlot, hotbar, ContainerInput.SWAP, mc.player);
-                    return; // no more than one inventory click per invocation
+                    return; // at most one synchronized inventory click every two ticks
                 }
             }
         }
+    }
+
+    /**
+     * Choose the fastest effective mining tool already present in the hotbar.
+     * Selection happens only while attacking a block, never when targeting an entity.
+     * The tool itself is never moved from the inventory.
+     */
+    public static void selectToolBeforeMining(Minecraft mc) {
+        if (config == null || !config.autoToolSwitch || mc.player == null || mc.level == null
+                || mc.gui.screen() != null || !(mc.hitResult instanceof BlockHitResult hit)) return;
+
+        BlockState state = mc.level.getBlockState(hit.getBlockPos());
+        if (state.isAir()) return;
+
+        int selected = mc.player.getInventory().getSelectedSlot();
+        ItemStack held = mc.player.getInventory().getItem(selected);
+        float heldSpeed = held.isEmpty() ? 1.0f : held.getDestroySpeed(state);
+        boolean heldCorrect = !held.isEmpty() && held.isCorrectToolForDrops(state);
+        int bestSlot = -1;
+        float bestSpeed = Math.max(1.0f, heldSpeed);
+        boolean bestCorrect = heldCorrect;
+
+        for (int slot = 0; slot < 9; slot++) {
+            if (slot == selected) continue;
+            ItemStack stack = mc.player.getInventory().getItem(slot);
+            if (stack.isEmpty() || stack.getItem() instanceof BlockItem || stack.getMaxStackSize() > 1)
+                continue;
+            if (stack.isDamageableItem() && stack.nextDamageWillBreak()) continue;
+
+            float speed = stack.getDestroySpeed(state);
+            if (speed <= 1.0f || !Float.isFinite(speed)) continue;
+            boolean correct = stack.isCorrectToolForDrops(state);
+
+            // A harvest-capable tool beats a faster tool that would lose drops.
+            if ((!bestCorrect && correct) ||
+                    (bestCorrect == correct && speed > bestSpeed + 0.001f)) {
+                bestSlot = slot;
+                bestSpeed = speed;
+                bestCorrect = correct;
+            }
+        }
+        if (bestSlot >= 0) mc.player.getInventory().setSelectedSlot(bestSlot);
     }
 
     public static boolean selectBeforePlacement(Minecraft mc) {
