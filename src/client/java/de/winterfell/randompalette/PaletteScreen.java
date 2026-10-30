@@ -31,15 +31,15 @@ public final class PaletteScreen extends Screen {
     private int top() { return (height - PANEL_H) / 2; }
 
     /**
-     * The palette contains only block types that are still in the player's
-     * 36-slot inventory (hotbar included), not historical selections.
+     * The palette only contains block types that currently exist in the
+     * nine hotbar slots (0-8). Inventory slots 9-35 are refill reserves only.
      * Never prune without a loaded player/inventory.
      */
     private boolean removeMissingPaletteEntries() {
         if (minecraft == null || minecraft.player == null || RandomPaletteClient.config == null) return false;
 
         java.util.Set<String> available = new java.util.HashSet<>();
-        for (int i = 0; i < 36; i++) {
+        for (int i = 0; i < 9; i++) {
             ItemStack stack = minecraft.player.getInventory().getItem(i);
             if (RandomPaletteClient.isSelectable(stack)) {
                 available.add(RandomPaletteClient.itemId(stack));
@@ -147,7 +147,7 @@ public final class PaletteScreen extends Screen {
         graphics.fill(x, y, x + PANEL_W, y + PANEL_H, 0xE9182636);
         graphics.outline(x, y, PANEL_W, PANEL_H, 0xFF60B5E7);
         graphics.text(font, "Winterfell Random Palette", x + 13, y + 13, 0xFFFFFFFF);
-        graphics.text(font, "Baublöcke anklicken (Werkzeuge sind gesperrt)", x + 13, y + 36, 0xFFB7D9ED);
+        graphics.text(font, "Nur Hotbar auswählbar (unterste Reihe)", x + 13, y + 36, 0xFFB7D9ED);
 
         if (minecraft.player != null) {
             for (int displaySlot = 0; displaySlot < 36; displaySlot++) {
@@ -155,15 +155,15 @@ public final class PaletteScreen extends Screen {
                 ItemStack stack = minecraft.player.getInventory().getItem(slot);
                 int bx = x + GRID_X + (displaySlot % 9) * CELL;
                 int by = y + GRID_Y + (displaySlot / 9) * CELL;
-                boolean selectable = RandomPaletteClient.isSelectable(stack);
+                boolean selectable = slot < 9 && RandomPaletteClient.isSelectable(stack);
                 boolean selected = selectable && RandomPaletteClient.config.weights.containsKey(
                         RandomPaletteClient.itemId(stack));
-                int color = selected ? 0xFF20764A : slot < 9 ? 0xFF33516B : 0xFF263B50;
+                int color = selected ? 0xFF20764A : selectable ? 0xFF33516B : 0xFF263B50;
                 graphics.fill(bx, by, bx + 19, by + 19, color);
                 graphics.outline(bx, by, 19, 19, selected ? 0xFF74FFAB : 0xFF607A91);
                 if (!stack.isEmpty()) {
                     graphics.item(stack, bx + 1, by + 1);
-                    if (!selectable) graphics.fill(bx + 1, by + 1, bx + 18, by + 18, 0x75000000);
+                    if (!selectable) graphics.fill(bx + 1, by + 1, bx + 18, by + 18, 0x85000000);
                     if (mouseX >= bx && mouseX < bx + 19 && mouseY >= by && mouseY < by + 19) {
                         graphics.setTooltipForNextFrame(font, stack, mouseX, mouseY);
                     }
@@ -199,13 +199,13 @@ public final class PaletteScreen extends Screen {
         if (pages > 1) {
             graphics.text(font, "Seite " + (page + 1) + "/" + pages, x + 210, y + 287, 0xFFEAF4FF);
         }
-        graphics.text(font, "Rot = nicht in Hotbar | +/- ändert Gewicht", x + 15, y + 285, 0xFFB7C9D9);
+        graphics.text(font, "Inventar oben = nur Nachfüllvorrat", x + 15, y + 285, 0xFFB7C9D9);
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
     }
 
     private ItemStack findInventoryItem(String id) {
         if (minecraft.player == null) return ItemStack.EMPTY;
-        for (int i = 0; i < 36; i++) {
+        for (int i = 0; i < 9; i++) {
             ItemStack stack = minecraft.player.getInventory().getItem(i);
             if (RandomPaletteClient.isSelectable(stack) && RandomPaletteClient.itemId(stack).equals(id)) return stack;
         }
@@ -236,6 +236,8 @@ public final class PaletteScreen extends Screen {
         if (mx < x || mx >= x + CELL * 9 || my < y || my >= y + CELL * 4) return false;
         int col = (int) (mx - x) / CELL;
         int row = (int) (my - y) / CELL;
+        // Display rows 0-2 are inventory reserve, never palette inputs.
+        if (row != 3) return true;
         ItemStack stack = minecraft.player.getInventory().getItem(inventorySlot(row * 9 + col));
         if (!RandomPaletteClient.isSelectable(stack)) return true;
         String id = RandomPaletteClient.itemId(stack);

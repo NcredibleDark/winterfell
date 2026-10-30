@@ -12,8 +12,8 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 ## Bedienung
 
 - `K`: Auswahl-GUI öffnen.
-- Im GUI Baublöcke aus dem Inventar anklicken und die relativen Gewichte mit `+` / `-` einstellen.
-- Die Gewichtungsliste wird beim Öffnen und während der Anzeige mit dem Inventar abgeglichen: Blöcke, die in keinem der 36 Spielerinventar-Slots mehr vorhanden sind, werden aus der Auswahl gelöscht. Vorhandene Gewichtungen bleiben erhalten.
+- Im GUI **nur Blöcke aus der untersten Reihe (Hotbar)** anklicken und ihre relativen Gewichte mit `+` / `-` einstellen. Die oberen drei Inventarreihen sind ausgegraut und nicht auswählbar.
+- Beim Öffnen und während der Anzeige werden Einträge automatisch entfernt, wenn der Blocktyp in keinem der neun Hotbar-Slots mehr liegt. Im Hauptinventar liegende Stacks dienen nur als Nachfüllreserve und zählen nicht zur Gewichtung.
 - Die ausgewählten Blöcke müssen für die tatsächliche Platzierung in der **Hotbar** liegen.
 - `J`: Zufallsplatzierung ein- oder ausschalten.
 - Beim normalen Platzieren wird ausschließlich zwischen den ausgewählten, in der Hotbar vorhandenen Baublöcken gewechselt. Werkzeuge sind von der Auswahl ausgeschlossen.
