@@ -1,0 +1,23 @@
+name: Fabric 26.3 Build
+on:
+  push:
+    branches: ["build/fabric-random-palette"]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.7.1'
+      - run: gradle build --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: winterfell-random-palette-26.3
+          path: build/libs/winterfell-random-palette-1.0.0.jar
+          if-no-files-found: error

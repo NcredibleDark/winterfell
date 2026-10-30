@@ -1,0 +1,13 @@
+{
+ "schemaVersion":1,
+ "id":"winterfell_random_palette",
+ "version":"${version}",
+ "name":"Winterfell Random Palette",
+ "description":"Zufällige Blockplatzierung mit gewichteter Hotbar-Palette",
+ "authors":["Winterfell"],
+ "license":"MIT",
+ "environment":"client",
+ "entrypoints":{"client":["de.winterfell.randompalette.RandomPaletteClient"]},
+ "mixins":[{"config":"winterfell_random_palette.client.mixins.json","environment":"client"}],
+ "depends":{"fabricloader":">=0.19.5","minecraft":"26.3","java":">=25","fabric-api":"*"}
+}

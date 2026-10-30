@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-    <base-config cleartextTrafficPermitted="false" />
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="false">winterfell-mc.com</domain>
-        <domain includeSubdomains="false">www.winterfell-mc.com</domain>
-        <domain includeSubdomains="false">winterfell.server.live</domain>
-    </domain-config>
-</network-security-config>

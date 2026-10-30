@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Winterfell</string>
-    <string name="offline_title">Winterfell ist gerade nicht erreichbar</string>
-    <string name="offline_description">Bitte prüfe deine Internetverbindung oder ob der Minecraft-Server läuft.</string>
-    <string name="offline_retry">Erneut versuchen</string>
-</resources>
