@@ -1,23 +1,78 @@
-name: Fabric 26.3 Build
+name: Build and release Winterfell Random Palette
 on:
   push:
-    branches: ["build/fabric-random-palette"]
+    branches:
+      - build/fabric-random-palette
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install Java 25
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '25'
-      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Configure Gradle
+        uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '9.7.1'
-      - run: gradle build --stacktrace
-      - uses: actions/upload-artifact@v4
+
+      - name: Read version
+        id: version
+        shell: bash
+        run: |
+          VERSION="$(sed -n 's/^mod_version=//p' gradle.properties)"
+          test -n "$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Compile and verify mod
+        run: gradle build --stacktrace
+
+      - name: Generate and verify SHA-256 checksum
+        shell: bash
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          cd build/libs
+          test -s "winterfell-random-palette-${VERSION}.jar"
+          sha256sum "winterfell-random-palette-${VERSION}.jar" > "winterfell-random-palette-${VERSION}.jar.sha256"
+          sha256sum --check "winterfell-random-palette-${VERSION}.jar.sha256"
+
+      - name: Attach build artifact (diagnostics)
+        uses: actions/upload-artifact@v4
         with:
-          name: winterfell-random-palette-26.3-v1.0.1
-          path: build/libs/winterfell-random-palette-1.0.1.jar
+          name: winterfell-random-palette-v${{ steps.version.outputs.version }}
+          path: |
+            build/libs/winterfell-random-palette-${{ steps.version.outputs.version }}.jar
+            build/libs/winterfell-random-palette-${{ steps.version.outputs.version }}.jar.sha256
           if-no-files-found: error
+
+      - name: Create a versioned GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          TAG="random-palette-v${VERSION}"
+          JAR="build/libs/winterfell-random-palette-${VERSION}.jar"
+          SHA="${JAR}.sha256"
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $TAG already exists; leaving published binaries unchanged."
+          else
+            gh release create "$TAG" "$JAR" "$SHA" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title "Winterfell Random Palette v${VERSION}" \
+              --notes-file RELEASE_NOTES.md \
+              --latest
+          fi
