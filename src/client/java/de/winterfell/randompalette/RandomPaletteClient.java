@@ -47,7 +47,7 @@ public final class RandomPaletteClient implements ClientModInitializer {
                 if (client.player != null && client.gui.screen() == null) {
                     config.enabled = !config.enabled;
                     config.save();
-                    client.player.displayClientMessage(Component.literal(
+                    client.gui.setOverlayMessage(Component.literal(
                             "§bWinterfell Palette: " + (config.enabled ? "§aAKTIV" : "§cAUS")), true);
                 }
             }
