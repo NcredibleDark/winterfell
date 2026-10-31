@@ -49,33 +49,22 @@ public final class PaletteHud {
         String mode = !config.enabled ? "AUS" : config.smartRandom ? "SMART" : "ZUFALL";
         String title = "Winterfell-Multimenü | " + mode;
         String blocks = "Palette: " + types + " Typen | " + available + " Blöcke";
-        String paletteRefill = "Paletten-Nachfüllen:";
         String hotbarRefill = "Hotbar-Nachfüllen:";
         String autoTool = "Werkzeugwechsel:";
 
-        int labelWidth = Math.max(mc.font.width(paletteRefill),
-                Math.max(mc.font.width(hotbarRefill), mc.font.width(autoTool)));
+        int labelWidth = Math.max(mc.font.width(hotbarRefill), mc.font.width(autoTool));
         int width = Math.max(Math.max(mc.font.width(title), mc.font.width(blocks)),
                 labelWidth + 8 + mc.font.width("AUS")) + 16;
         int x = Math.max(4, Math.min(graphics.guiWidth() - width - 4, graphics.guiWidth() / 2 + 103));
-        int y = Math.max(3, graphics.guiHeight() - 105);
-        int height = 66;
+        int y = Math.max(3, graphics.guiHeight() - 93);
+        int height = 54;
 
         graphics.fill(x, y, x + width, y + height, 0xBB101925);
         graphics.fill(x, y, x + 2, y + height, config.enabled ? 0xFF69C4EE : 0xFF718392);
         graphics.text(mc.font, title, x + 8, y + 4, config.enabled ? 0xFFB9EFFF : 0xFFCFD3DB);
         graphics.text(mc.font, blocks, x + 8, y + 16, 0xFFE9EDF2);
-        drawAutoStatus(graphics, mc, x + 8, y + 29, paletteRefill, config.enabled);
-        drawStatus(graphics, mc, x + 8, y + 41, hotbarRefill, config.generalRefill);
-        drawStatus(graphics, mc, x + 8, y + 53, autoTool, config.autoToolSwitch);
-    }
-
-    // This feature is built in: there is deliberately no separate off switch.
-    private static void drawAutoStatus(GuiGraphicsExtractor graphics, Minecraft mc,
-                                       int x, int y, String label, boolean paletteEnabled) {
-        graphics.text(mc.font, label, x, y, 0xFFB9C7D5);
-        graphics.text(mc.font, paletteEnabled ? "AUTO" : "AUS",
-                x + mc.font.width(label) + 7, y, paletteEnabled ? 0xFF75E2A7 : 0xFFFF938C);
+        drawStatus(graphics, mc, x + 8, y + 29, hotbarRefill, config.generalRefill);
+        drawStatus(graphics, mc, x + 8, y + 41, autoTool, config.autoToolSwitch);
     }
 
     private static void drawStatus(GuiGraphicsExtractor graphics, Minecraft mc,

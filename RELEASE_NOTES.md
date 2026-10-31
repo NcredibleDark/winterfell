@@ -1,21 +1,20 @@
-## Winterfell-Multimenü v1.3.3
+## Winterfell-Multimenü v1.3.4 – Release-Kandidat
 
-Fabric-Mod für Minecraft 26.3 / Java 25.
+Fabric-Client-Mod für Minecraft 26.3 (Java 25).
 
-### Änderung: Paletten-Nachfüllen als Standard
-- Das **Paletten-Nachfüllen** ist nun ein fester Bestandteil der Random-Palette und funktioniert **automatisch, wenn die Zufallsplatzierung aktiv ist**.
-- Der separate **Auto-Nachfüllen**-Button ist aus dem K-Menü entfernt.
-- Die alte Konfigurationsoption `autoRefill` wird nicht mehr benötigt; auch wenn sie in einer älteren Konfiguration deaktiviert war, funktioniert das Paletten-Nachfüllen jetzt automatisch.
-- Im HUD steht bei **Paletten-Nachfüllen** nun **AUTO** (grün) bei aktiver Random-Palette bzw. **AUS** (rot), wenn die Random-Palette deaktiviert ist.
-- Das **allgemeine Hotbar-Refill** bleibt ein eigenständiger Schalter im K-Menü und funktioniert unabhängig von der Random-Palette.
+### Kleine HUD-Bereinigung
+- Die Statuszeile **Paletten-Nachfüllen** wurde vollständig aus dem HUD entfernt, weil diese Funktion seit v1.3.3 zum festen Bestandteil der aktiven Random-Palette gehört.
+- Das Overlay ist eine Zeile kürzer und damit kompakter. Die vorhandenen Statuszeilen **Hotbar-Nachfüllen** und **Werkzeugwechsel** rücken nach oben.
+- **Winterfell-Multimenü**, Palettenmodus (AUS/ZUFALL/SMART), Anzahl an Blocktypen und Vorrat bleiben sichtbar.
 
-### Unverändert
-- Smart Random und Gewichtungen ausschließlich aus der Hotbar.
-- Auto Tool Switch, HUD und U-Hotkey.
-- Normale Inventar-SWAP-Klicks für Nachschub, keine Server-Mod notwendig.
-- Alle vorherigen Releases, einschließlich Version 1.3.2, bleiben verfügbar.
+### Bestehende Funktionen unverändert
+- Smart Random und gewichtete Auswahl ausschließlich aus der Hotbar.
+- Automatisches Nachfüllen ausgewählter Palettenblöcke aus dem Inventar.
+- Separat aktivierbares allgemeines Hotbar-Refill und Auto Tool Switch.
+- HUD über **U** oder den Button im **K**-Menü an- und ausschaltbar.
+- Die Konfigurationsdatei und sämtliche Bedienelemente bleiben gleich.
 
 ### Installation
-Vorherige `winterfell-random-palette-1.3.2.jar` entfernen und `winterfell-random-palette-1.3.3.jar` in den Fabric-26.3-`mods`-Ordner legen. Fabric API und Java 25 erforderlich.
+Die bisherige `winterfell-random-palette-1.3.3.jar` im `mods`-Ordner durch `winterfell-random-palette-1.3.4.jar` ersetzen. Fabric API und Java 25 erforderlich; keine Server-Mod nötig.
 
-Automatisierter Kompilier-Build mit SHA-256-Prüfsumme; ein Spieltest ist weiterhin empfehlenswert.
+**Release-Kandidat:** Auf der von Nutzern als funktionierend bestätigten v1.3.3 aufbauend. GitHub Actions prüft die Kompilierung und erstellt eine SHA-256-Prüfsumme; ein abschließender Ingame-Test der HUD-Darstellung ist weiterhin sinnvoll.
