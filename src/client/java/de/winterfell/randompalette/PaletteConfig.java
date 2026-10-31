@@ -26,6 +26,7 @@ public final class PaletteConfig {
     public boolean autoToolSwitch = false;
     public boolean smartRandom = false;
     public boolean showHud = true;
+    public boolean ceramicGhostPreview = false;
     public LinkedHashMap<String, Integer> weights = new LinkedHashMap<>();
 
     public static PaletteConfig load() {

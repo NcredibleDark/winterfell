@@ -17,6 +17,7 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 - Die ausgewählten Blöcke müssen für die tatsächliche Platzierung in der **Hotbar** liegen.
 - `J`: Zufallsplatzierung ein- oder ausschalten.
 - `U`: Das HUD-Overlay direkt ein-/ausblenden (Tastenbelegung in den Minecraft-Steuerungseinstellungen anpassbar). Im `K`-Menü gibt es dafür weiterhin den eigenen **HUD: AN/AUS**-Button.
+- **Keramik-Ghost-Vorschau** (standardmäßig AUS): Im `K`-Menü aktivieren. Mit glasierter Keramik in der Haupthand erscheint ein halbtransparentes Blockmodell mit dem tatsächlichen Muster und der vom aktuellen Blickwinkel bestimmten Drehung am Zielort. Die Vorschau wird nur bei deaktivierter Random-Palette angezeigt, da deren Zufallsauswahl sonst nicht zuverlässig vorhergesagt werden kann. Kein Server-Plugin und kein automatisches Platzieren.
 - **Smart Random:** Optional per `K`-Menü aktivieren. Vergangene Blocktypen erhalten eine geringere Wahrscheinlichkeit, sodass Texturen abwechslungsreicher wirken. Die ursprünglich festgelegten Gewichtungen bleiben die Basis.
 - **Bau-HUD:** Die kompakte, abschaltbare Anzeige **Winterfell-Multimenü** zeigt Palettenmodus, verfügbare Blöcke sowie die farbigen AN/AUS-Zustände von **Hotbar-Nachfüllen** und **Werkzeugwechsel**. Das automatische Paletten-Nachfüllen ist bewusst nicht extra aufgeführt.
 - Beim normalen Platzieren wird ausschließlich zwischen den ausgewählten, in der Hotbar vorhandenen Baublöcken gewechselt. Werkzeuge sind von der Auswahl ausgeschlossen.

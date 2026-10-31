@@ -46,6 +46,7 @@ public final class RandomPaletteClient implements ClientModInitializer {
     public void onInitializeClient() {
         config = PaletteConfig.load();
         PaletteHud.register();
+        CeramicGhostPreview.register();
         openKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.winterfell_random_palette.open", InputConstants.Type.KEYBOARD,
                 InputConstants.KEY_K, CATEGORY));

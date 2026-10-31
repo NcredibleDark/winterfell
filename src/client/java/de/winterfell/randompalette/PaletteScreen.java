@@ -106,6 +106,16 @@ public final class PaletteScreen extends Screen {
                     rebuildWidgets();
                 }).bounds(x + 199, y + 126, 115, 20).build());
 
+        addRenderableWidget(Button.builder(
+                Component.literal(RandomPaletteClient.config.ceramicGhostPreview
+                        ? "§aKeramik-Ghost: AN" : "§cKeramik-Ghost: AUS"),
+                b -> {
+                    RandomPaletteClient.config.ceramicGhostPreview =
+                            !RandomPaletteClient.config.ceramicGhostPreview;
+                    RandomPaletteClient.config.save();
+                    rebuildWidgets();
+                }).bounds(x + 199, y + 150, 115, 20).build());
+
         List<String> ids = new ArrayList<>(RandomPaletteClient.config.weights.keySet());
         int pages = Math.max(1, (ids.size() + PER_PAGE - 1) / PER_PAGE);
         page = Math.max(0, Math.min(page, pages - 1));
