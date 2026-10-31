@@ -1,14 +1,20 @@
-## Winterfell Random Palette 1.3.1 – Winterfell-Multimenü
+## Winterfell Random Palette v1.3.2 – Winterfell-Multimenü
 
-Minecraft 26.3 / Fabric / Java 25.
+Fabric-Mod für Minecraft 26.3 (Java 25).
 
-### Neue Bedienung
-- Das HUD-Overlay lässt sich direkt mit **U** ein- und ausblenden, ganz ohne das Hauptmenü zu öffnen. Die Taste kann unter Optionen → Steuerung geändert werden.
-- Der bereits vorhandene **HUD: AN/AUS**-Button im **K**-Menü bleibt erhalten; beide Wege steuern dieselbe gespeicherte Einstellung.
-- HUD-Titel und Menü-Titel heißen jetzt exakt **Winterfell-Multimenü**.
-- Die Mod-ID, Konfigurationsdatei und alle bisherigen Funktionen bleiben unverändert, einschließlich Smart Random, Hotbar-Refill und Auto Tool Switch.
+### HUD-Verbesserung
+- Der HUD-Titel bleibt **Winterfell-Multimenü**.
+- Die bisher unklaren Status-Kürzel `P`, `H`, `Tool` wurden ersetzt durch **Paletten-Nachfüllen**, **Hotbar-Nachfüllen** und **Werkzeugwechsel**.
+- Jeder Status wird nun separat mit **AN (grün)** bzw. **AUS (rot)** angezeigt, in einer schmalen fünfzeiligen Box neben/oberhalb der Hotbar.
+- Das Overlay kann jederzeit über **U** oder den **HUD: AN/AUS**-Button im Menü (`K`) ein- bzw. ausgeblendet werden.
+
+### Unverändert
+- Smart Random und alle Gewichtungen.
+- Auswahl ausschließlich aus den neun Hotbar-Slots.
+- Beide Nachfüll-Optionen sowie Auto Tool Switch.
+- Die stabile Version v1.3.0 und der Zwischenschritt v1.3.1 bleiben separat verfügbar.
 
 ### Installation
-Vorherige `winterfell-random-palette-1.3.0.jar` aus dem `mods`-Ordner entfernen und `winterfell-random-palette-1.3.1.jar` einsetzen. Fabric API und Java 25 sind erforderlich.
+Vorherige `winterfell-random-palette-1.3.1.jar` aus dem `mods`-Ordner entfernen und `winterfell-random-palette-1.3.2.jar` einsetzen. Fabric API und Java 25 erforderlich, kein Server-Plugin.
 
-Die vorherige Version **1.3.0** bleibt als separates GitHub-Release verfügbar. Der automatisierte Build stellt die Kompilierung sicher; tatsächliche Ingame-Tests sind zusätzlich sinnvoll.
+Der automatisierte Build kompiliert die Mod und erzeugt einen SHA-256-Hash. Ein Ingame-Test wird empfohlen.

@@ -47,24 +47,33 @@ public final class PaletteHud {
         }
 
         String mode = !config.enabled ? "AUS" : config.smartRandom ? "SMART" : "ZUFALL";
-        String line1 = "Winterfell-Multimenü | " + mode;
-        String line2 = "Palette " + types + " Typen | " + available + " Bloecke";
-        String line3 = "P:" + on(config.enabled && config.autoRefill)
-                + "  H:" + on(config.generalRefill)
-                + "  Tool:" + on(config.autoToolSwitch);
+        String title = "Winterfell-Multimenü | " + mode;
+        String blocks = "Palette: " + types + " Typen | " + available + " Blöcke";
+        String paletteRefill = "Paletten-Nachfüllen:";
+        String hotbarRefill = "Hotbar-Nachfüllen:";
+        String autoTool = "Werkzeugwechsel:";
 
-        int width = Math.max(mc.font.width(line1), Math.max(mc.font.width(line2), mc.font.width(line3))) + 14;
+        int labelWidth = Math.max(mc.font.width(paletteRefill),
+                Math.max(mc.font.width(hotbarRefill), mc.font.width(autoTool)));
+        int width = Math.max(Math.max(mc.font.width(title), mc.font.width(blocks)),
+                labelWidth + 8 + mc.font.width("AUS")) + 16;
         int x = Math.max(4, Math.min(graphics.guiWidth() - width - 4, graphics.guiWidth() / 2 + 103));
-        int y = graphics.guiHeight() - 79;
+        int y = Math.max(3, graphics.guiHeight() - 105);
+        int height = 66;
 
-        graphics.fill(x, y, x + width, y + 42, 0xBB101925);
-        graphics.fill(x, y, x + 2, y + 42, config.enabled ? 0xFF69C4EE : 0xFF718392);
-        graphics.text(mc.font, line1, x + 7, y + 4, config.enabled ? 0xFFB9EFFF : 0xFFCFD3DB);
-        graphics.text(mc.font, line2, x + 7, y + 16, 0xFFE9EDF2);
-        graphics.text(mc.font, line3, x + 7, y + 28, 0xFFA9B9C8);
+        graphics.fill(x, y, x + width, y + height, 0xBB101925);
+        graphics.fill(x, y, x + 2, y + height, config.enabled ? 0xFF69C4EE : 0xFF718392);
+        graphics.text(mc.font, title, x + 8, y + 4, config.enabled ? 0xFFB9EFFF : 0xFFCFD3DB);
+        graphics.text(mc.font, blocks, x + 8, y + 16, 0xFFE9EDF2);
+        drawStatus(graphics, mc, x + 8, y + 29, paletteRefill, config.enabled && config.autoRefill);
+        drawStatus(graphics, mc, x + 8, y + 41, hotbarRefill, config.generalRefill);
+        drawStatus(graphics, mc, x + 8, y + 53, autoTool, config.autoToolSwitch);
     }
 
-    private static String on(boolean enabled) {
-        return enabled ? "AN" : "AUS";
+    private static void drawStatus(GuiGraphicsExtractor graphics, Minecraft mc,
+                                   int x, int y, String label, boolean enabled) {
+        graphics.text(mc.font, label, x, y, 0xFFB9C7D5);
+        graphics.text(mc.font, enabled ? "AN" : "AUS",
+                x + mc.font.width(label) + 7, y, enabled ? 0xFF75E2A7 : 0xFFFF938C);
     }
 }

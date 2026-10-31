@@ -18,7 +18,7 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 - `J`: Zufallsplatzierung ein- oder ausschalten.
 - `U`: Das HUD-Overlay direkt ein-/ausblenden (Tastenbelegung in den Minecraft-Steuerungseinstellungen anpassbar). Im `K`-Menü gibt es dafür weiterhin den eigenen **HUD: AN/AUS**-Button.
 - **Smart Random:** Optional per `K`-Menü aktivieren. Vergangene Blocktypen erhalten eine geringere Wahrscheinlichkeit, sodass Texturen abwechslungsreicher wirken. Die ursprünglich festgelegten Gewichtungen bleiben die Basis.
-- **Bau-HUD:** Überschrift **Winterfell-Multimenü**, ein kompaktes, abschaltbares HUD neben der Hotbar zeigt Palettenmodus, verfügbare Blöcke und den Status der Nachfüll-/Werkzeugfunktionen.
+- **Bau-HUD:** Überschrift **Winterfell-Multimenü**, eine kompakte, abschaltbare Anzeige mit ausgeschriebenen und farblich markierten Zuständen für Paletten-Nachfüllen, Hotbar-Nachfüllen und Werkzeugwechsel neben der Hotbar zeigt Palettenmodus, verfügbare Blöcke und den Status der Nachfüll-/Werkzeugfunktionen.
 - Beim normalen Platzieren wird ausschließlich zwischen den ausgewählten, in der Hotbar vorhandenen Baublöcken gewechselt. Werkzeuge sind von der Auswahl ausgeschlossen.
 - **Paletten-Auto-Nachfüllen** ist im GUI separat schaltbar (standardmäßig AN). Sobald ein so belegter Hotbar-Slot aufgebraucht ist, holt die Mod den gleichen Blocktyp aus dem Inventar nach. Nur beim Spielen, nicht während offener Inventarfenster. Zu Beginn mindestens einen passenden Blocktyp in die Hotbar legen.
 - **Hotbar-Refill** (standardmäßig AUS) füllt beliebige verbrauchte, stapelbare Hotbar-Items mit exakt gleichen Items aus dem Inventar nach – unabhängig von der Random-Palette.
