@@ -121,20 +121,20 @@ public final class RandomPaletteClient implements ClientModInitializer {
     /**
      * The two refill modes are independent:
      * - generalRefill: any stackable item, but only the same item and components.
-     * - autoRefill: selected palette blocks while random palette is active.
+     * - palette refill: always active while the random palette is enabled.
      * Never touch non-empty hotbar slots or non-stackable tools.
      * Only vanilla inventory SWAP clicks, validated by the server.
      */
     private static void refillOneSlot(Minecraft mc) {
         if (mc.player == null || mc.gameMode == null || mc.level == null || config == null
-                || (!config.generalRefill && !(config.enabled && config.autoRefill))
+                || (!config.generalRefill && !config.enabled)
                 || mc.gui.screen() != null || nextInventoryClick > 0
                 || mc.player.containerMenu != mc.player.inventoryMenu) return;
 
         for (int hotbar = 0; hotbar < 9; hotbar++) {
             if (!mc.player.getInventory().getItem(hotbar).isEmpty() || retryDelay[hotbar] > 0) continue;
             ItemStack wantedStack = config.generalRefill ? rememberedStack[hotbar] : null;
-            String wantedBlock = config.enabled && config.autoRefill ? rememberedBlock[hotbar] : null;
+            String wantedBlock = config.enabled ? rememberedBlock[hotbar] : null;
             boolean hasGeneral = wantedStack != null && !wantedStack.isEmpty()
                     && wantedStack.isStackable();
             if (!hasGeneral && wantedBlock == null) continue;

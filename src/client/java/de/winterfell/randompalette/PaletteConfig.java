@@ -22,7 +22,6 @@ public final class PaletteConfig {
             .resolve("winterfell-random-palette.json");
 
     public boolean enabled = false;
-    public boolean autoRefill = true;
     public boolean generalRefill = false;
     public boolean autoToolSwitch = false;
     public boolean smartRandom = false;

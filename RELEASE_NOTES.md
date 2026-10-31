@@ -1,20 +1,21 @@
-## Winterfell Random Palette v1.3.2 – Winterfell-Multimenü
+## Winterfell-Multimenü v1.3.3
 
-Fabric-Mod für Minecraft 26.3 (Java 25).
+Fabric-Mod für Minecraft 26.3 / Java 25.
 
-### HUD-Verbesserung
-- Der HUD-Titel bleibt **Winterfell-Multimenü**.
-- Die bisher unklaren Status-Kürzel `P`, `H`, `Tool` wurden ersetzt durch **Paletten-Nachfüllen**, **Hotbar-Nachfüllen** und **Werkzeugwechsel**.
-- Jeder Status wird nun separat mit **AN (grün)** bzw. **AUS (rot)** angezeigt, in einer schmalen fünfzeiligen Box neben/oberhalb der Hotbar.
-- Das Overlay kann jederzeit über **U** oder den **HUD: AN/AUS**-Button im Menü (`K`) ein- bzw. ausgeblendet werden.
+### Änderung: Paletten-Nachfüllen als Standard
+- Das **Paletten-Nachfüllen** ist nun ein fester Bestandteil der Random-Palette und funktioniert **automatisch, wenn die Zufallsplatzierung aktiv ist**.
+- Der separate **Auto-Nachfüllen**-Button ist aus dem K-Menü entfernt.
+- Die alte Konfigurationsoption `autoRefill` wird nicht mehr benötigt; auch wenn sie in einer älteren Konfiguration deaktiviert war, funktioniert das Paletten-Nachfüllen jetzt automatisch.
+- Im HUD steht bei **Paletten-Nachfüllen** nun **AUTO** (grün) bei aktiver Random-Palette bzw. **AUS** (rot), wenn die Random-Palette deaktiviert ist.
+- Das **allgemeine Hotbar-Refill** bleibt ein eigenständiger Schalter im K-Menü und funktioniert unabhängig von der Random-Palette.
 
 ### Unverändert
-- Smart Random und alle Gewichtungen.
-- Auswahl ausschließlich aus den neun Hotbar-Slots.
-- Beide Nachfüll-Optionen sowie Auto Tool Switch.
-- Die stabile Version v1.3.0 und der Zwischenschritt v1.3.1 bleiben separat verfügbar.
+- Smart Random und Gewichtungen ausschließlich aus der Hotbar.
+- Auto Tool Switch, HUD und U-Hotkey.
+- Normale Inventar-SWAP-Klicks für Nachschub, keine Server-Mod notwendig.
+- Alle vorherigen Releases, einschließlich Version 1.3.2, bleiben verfügbar.
 
 ### Installation
-Vorherige `winterfell-random-palette-1.3.1.jar` aus dem `mods`-Ordner entfernen und `winterfell-random-palette-1.3.2.jar` einsetzen. Fabric API und Java 25 erforderlich, kein Server-Plugin.
+Vorherige `winterfell-random-palette-1.3.2.jar` entfernen und `winterfell-random-palette-1.3.3.jar` in den Fabric-26.3-`mods`-Ordner legen. Fabric API und Java 25 erforderlich.
 
-Der automatisierte Build kompiliert die Mod und erzeugt einen SHA-256-Hash. Ein Ingame-Test wird empfohlen.
+Automatisierter Kompilier-Build mit SHA-256-Prüfsumme; ein Spieltest ist weiterhin empfehlenswert.

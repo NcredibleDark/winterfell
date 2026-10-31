@@ -75,27 +75,19 @@ public final class PaletteScreen extends Screen {
                 }).bounds(x + 204, y + 8, 110, 20).build());
 
         addRenderableWidget(Button.builder(
-                Component.literal(RandomPaletteClient.config.autoRefill ? "§aAuto-Nachfüllen: AN" : "§cAuto-Nachfüllen: AUS"),
-                b -> {
-                    RandomPaletteClient.config.autoRefill = !RandomPaletteClient.config.autoRefill;
-                    RandomPaletteClient.config.save();
-                    rebuildWidgets();
-                }).bounds(x + 199, y + 57, 115, 20).build());
-
-        addRenderableWidget(Button.builder(
                 Component.literal(RandomPaletteClient.config.generalRefill ? "§aHotbar-Refill: AN" : "§cHotbar-Refill: AUS"),
                 b -> {
                     RandomPaletteClient.config.generalRefill = !RandomPaletteClient.config.generalRefill;
                     RandomPaletteClient.config.save();
                     rebuildWidgets();
-                }).bounds(x + 199, y + 80, 115, 20).build());
+                }).bounds(x + 199, y + 57, 115, 20).build());
         addRenderableWidget(Button.builder(
                 Component.literal(RandomPaletteClient.config.autoToolSwitch ? "§aAuto Tool Switch: AN" : "§cAuto Tool Switch: AUS"),
                 b -> {
                     RandomPaletteClient.config.autoToolSwitch = !RandomPaletteClient.config.autoToolSwitch;
                     RandomPaletteClient.config.save();
                     rebuildWidgets();
-                }).bounds(x + 199, y + 103, 115, 20).build());
+                }).bounds(x + 199, y + 80, 115, 20).build());
 
         addRenderableWidget(Button.builder(
                 Component.literal(RandomPaletteClient.config.smartRandom
@@ -104,7 +96,7 @@ public final class PaletteScreen extends Screen {
                     RandomPaletteClient.config.smartRandom = !RandomPaletteClient.config.smartRandom;
                     RandomPaletteClient.config.save();
                     rebuildWidgets();
-                }).bounds(x + 199, y + 125, 115, 20).build());
+                }).bounds(x + 199, y + 103, 115, 20).build());
         addRenderableWidget(Button.builder(
                 Component.literal(RandomPaletteClient.config.showHud
                         ? "§aHUD: AN (U)" : "§cHUD: AUS (U)"),
@@ -112,7 +104,7 @@ public final class PaletteScreen extends Screen {
                     RandomPaletteClient.config.showHud = !RandomPaletteClient.config.showHud;
                     RandomPaletteClient.config.save();
                     rebuildWidgets();
-                }).bounds(x + 199, y + 148, 115, 20).build());
+                }).bounds(x + 199, y + 126, 115, 20).build());
 
         List<String> ids = new ArrayList<>(RandomPaletteClient.config.weights.keySet());
         int pages = Math.max(1, (ids.size() + PER_PAGE - 1) / PER_PAGE);

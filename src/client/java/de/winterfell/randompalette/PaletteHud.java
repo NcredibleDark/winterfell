@@ -65,9 +65,17 @@ public final class PaletteHud {
         graphics.fill(x, y, x + 2, y + height, config.enabled ? 0xFF69C4EE : 0xFF718392);
         graphics.text(mc.font, title, x + 8, y + 4, config.enabled ? 0xFFB9EFFF : 0xFFCFD3DB);
         graphics.text(mc.font, blocks, x + 8, y + 16, 0xFFE9EDF2);
-        drawStatus(graphics, mc, x + 8, y + 29, paletteRefill, config.enabled && config.autoRefill);
+        drawAutoStatus(graphics, mc, x + 8, y + 29, paletteRefill, config.enabled);
         drawStatus(graphics, mc, x + 8, y + 41, hotbarRefill, config.generalRefill);
         drawStatus(graphics, mc, x + 8, y + 53, autoTool, config.autoToolSwitch);
+    }
+
+    // This feature is built in: there is deliberately no separate off switch.
+    private static void drawAutoStatus(GuiGraphicsExtractor graphics, Minecraft mc,
+                                       int x, int y, String label, boolean paletteEnabled) {
+        graphics.text(mc.font, label, x, y, 0xFFB9C7D5);
+        graphics.text(mc.font, paletteEnabled ? "AUTO" : "AUS",
+                x + mc.font.width(label) + 7, y, paletteEnabled ? 0xFF75E2A7 : 0xFFFF938C);
     }
 
     private static void drawStatus(GuiGraphicsExtractor graphics, Minecraft mc,
