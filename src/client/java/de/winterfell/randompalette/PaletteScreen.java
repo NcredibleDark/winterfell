@@ -14,11 +14,11 @@ import java.util.Map;
 
 public final class PaletteScreen extends Screen {
     private static final int PANEL_W = 332;
-    private static final int PANEL_H = 325;
+    private static final int PANEL_H = 355;
     private static final int GRID_X = 15;
     private static final int GRID_Y = 57;
     private static final int CELL = 20;
-    private static final int LIST_Y = 161;
+    private static final int LIST_Y = 180;
     private static final int ROW_H = 19;
     private static final int PER_PAGE = 6;
     private int page = 0;
@@ -97,6 +97,23 @@ public final class PaletteScreen extends Screen {
                     rebuildWidgets();
                 }).bounds(x + 199, y + 103, 115, 20).build());
 
+        addRenderableWidget(Button.builder(
+                Component.literal(RandomPaletteClient.config.smartRandom
+                        ? "§aSmart Random: AN" : "§cSmart Random: AUS"),
+                b -> {
+                    RandomPaletteClient.config.smartRandom = !RandomPaletteClient.config.smartRandom;
+                    RandomPaletteClient.config.save();
+                    rebuildWidgets();
+                }).bounds(x + 199, y + 125, 115, 20).build());
+        addRenderableWidget(Button.builder(
+                Component.literal(RandomPaletteClient.config.showHud
+                        ? "§aBau-HUD: AN" : "§cBau-HUD: AUS"),
+                b -> {
+                    RandomPaletteClient.config.showHud = !RandomPaletteClient.config.showHud;
+                    RandomPaletteClient.config.save();
+                    rebuildWidgets();
+                }).bounds(x + 199, y + 148, 115, 20).build());
+
         List<String> ids = new ArrayList<>(RandomPaletteClient.config.weights.keySet());
         int pages = Math.max(1, (ids.size() + PER_PAGE - 1) / PER_PAGE);
         page = Math.max(0, Math.min(page, pages - 1));
@@ -114,15 +131,15 @@ public final class PaletteScreen extends Screen {
             addRenderableWidget(Button.builder(Component.literal("<"), b -> {
                 page = Math.max(0, page - 1);
                 rebuildWidgets();
-            }).bounds(x + 178, y + 282, 20, 18).build());
+            }).bounds(x + 178, y + 300, 20, 18).build());
             addRenderableWidget(Button.builder(Component.literal(">"), b -> {
                 page = Math.min(pages - 1, page + 1);
                 rebuildWidgets();
-            }).bounds(x + 289, y + 282, 20, 18).build());
+            }).bounds(x + 289, y + 300, 20, 18).build());
         }
 
         addRenderableWidget(Button.builder(Component.literal("Fertig"), b -> onClose())
-                .bounds(x + 118, y + 302, 96, 19).build());
+                .bounds(x + 118, y + 331, 96, 19).build());
     }
 
     private void changeWeight(String id, int diff) {
@@ -171,7 +188,7 @@ public final class PaletteScreen extends Screen {
             }
         }
 
-         graphics.text(font, "Gewichtung (relativ):", x + 16, y + 145, 0xFFFFFFFF);
+         graphics.text(font, "Gewichtung (relativ):", x + 16, y + 164, 0xFFFFFFFF);
 
         List<Map.Entry<String, Integer>> entries = new ArrayList<>(RandomPaletteClient.config.weights.entrySet());
         long total = entries.stream().filter(e -> isInHotbar(e.getKey()))
@@ -197,9 +214,9 @@ public final class PaletteScreen extends Screen {
 
         int pages = Math.max(1, (entries.size() + PER_PAGE - 1) / PER_PAGE);
         if (pages > 1) {
-            graphics.text(font, "Seite " + (page + 1) + "/" + pages, x + 210, y + 287, 0xFFEAF4FF);
+            graphics.text(font, "Seite " + (page + 1) + "/" + pages, x + 210, y + 305, 0xFFEAF4FF);
         }
-        graphics.text(font, "Inventar oben = nur Nachfüllvorrat", x + 15, y + 285, 0xFFB7C9D9);
+        graphics.text(font, "Hotbar = Auswahl", x + 15, y + 307, 0xFFB7C9D9);
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
     }
 

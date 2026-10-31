@@ -15,7 +15,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.phys.BlockHitResult;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -37,10 +39,12 @@ public final class RandomPaletteClient implements ClientModInitializer {
     private static int nextInventoryClick = 0;
     private static final int[] retryDelay = new int[9];
     private static Object previousPlayer;
+    private static final Deque<String> smartRecent = new ArrayDeque<>();
 
     @Override
     public void onInitializeClient() {
         config = PaletteConfig.load();
+        PaletteHud.register();
         openKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.winterfell_random_palette.open", InputConstants.Type.KEYBOARD,
                 InputConstants.KEY_K, CATEGORY));
@@ -57,6 +61,7 @@ public final class RandomPaletteClient implements ClientModInitializer {
             while (toggleKey.consumeClick()) {
                 if (client.player != null && client.gui.screen() == null) {
                     config.enabled = !config.enabled;
+                    smartRecent.clear();
                     config.save();
                 }
             }
@@ -79,6 +84,7 @@ public final class RandomPaletteClient implements ClientModInitializer {
             Arrays.fill(rememberedStack, null);
             Arrays.fill(retryDelay, 0);
             nextInventoryClick = 0;
+            smartRecent.clear();
             previousPlayer = mc.player;
         }
         if (mc.player == null || config == null) return;
@@ -192,33 +198,51 @@ public final class RandomPaletteClient implements ClientModInitializer {
         // If a slot just ran out, recover it before selecting the next block.
         refillOneSlot(mc);
 
+        // Exact same hotbar-only candidates and refill behavior as v1.2.1.
         List<WeightedSlot> choices = new ArrayList<>();
-        long sum = 0;
-        // Ein Blocktyp zaehlt einmal - unabhaengig von mehreren Hotbar-Stacks.
+        double totalWeight = 0.0;
         for (Map.Entry<String, Integer> entry : config.weights.entrySet()) {
             int weight = entry.getValue();
             if (weight < 1) continue;
-            for (int i = 0; i < 9; i++) {
-                ItemStack stack = mc.player.getInventory().getItem(i);
+            for (int slot = 0; slot < 9; slot++) {
+                ItemStack stack = mc.player.getInventory().getItem(slot);
                 if (isSelectable(stack) && itemId(stack).equals(entry.getKey())) {
-                    sum += weight;
-                    choices.add(new WeightedSlot(i, sum));
+                    double adjustedWeight = weight;
+                    if (config.smartRandom && config.weights.size() > 1) {
+                        // Prefer variation but never prohibit repetition.
+                        int distance = 0;
+                        for (String recent : smartRecent) {
+                            if (recent.equals(entry.getKey())) {
+                                adjustedWeight *= distance == 0 ? 0.22 : distance == 1 ? 0.58 : 0.78;
+                                break;
+                            }
+                            distance++;
+                        }
+                    }
+                    totalWeight += adjustedWeight;
+                    choices.add(new WeightedSlot(slot, entry.getKey(), totalWeight));
                     break;
                 }
             }
         }
-        // Kein zulässiger Block: Vanilla-Rechtsklick verhindern.
+        // Never select tools or arbitrary blocks from the inventory.
         if (choices.isEmpty()) return false;
-
-        long roll = ThreadLocalRandom.current().nextLong(sum);
+        double roll = ThreadLocalRandom.current().nextDouble(totalWeight);
         for (WeightedSlot choice : choices) {
             if (roll < choice.cumulativeWeight()) {
                 mc.player.getInventory().setSelectedSlot(choice.slot());
+                if (config.smartRandom) rememberSmartChoice(choice.id());
+                else smartRecent.clear();
                 return true;
             }
         }
         return false;
     }
 
-    private record WeightedSlot(int slot, long cumulativeWeight) {}
+    private static void rememberSmartChoice(String id) {
+        smartRecent.addFirst(id);
+        while (smartRecent.size() > 3) smartRecent.removeLast();
+    }
+
+    private record WeightedSlot(int slot, String id, double cumulativeWeight) {}
 }

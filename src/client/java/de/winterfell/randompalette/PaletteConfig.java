@@ -25,6 +25,8 @@ public final class PaletteConfig {
     public boolean autoRefill = true;
     public boolean generalRefill = false;
     public boolean autoToolSwitch = false;
+    public boolean smartRandom = false;
+    public boolean showHud = true;
     public LinkedHashMap<String, Integer> weights = new LinkedHashMap<>();
 
     public static PaletteConfig load() {

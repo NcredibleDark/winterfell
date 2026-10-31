@@ -1,15 +1,12 @@
-## Winterfell Random Palette 1.2.1
+## Winterfell Random Palette 1.3.0
 
-Minecraft Fabric 26.3 / Java 25.
+Für Minecraft 26.3 / Fabric / Java 25.
 
-### Fehlerbehebung: Gewichtung ausschließlich aus der Hotbar
-- Im Auswahlmenü ist nur die **unterste Inventarreihe (Hotbar)** anklickbar. Die oberen drei Reihen sind ausgegraut und können nicht mehr zur zufälligen Blockpalette hinzugefügt werden.
-- Beim Öffnen und während des Menüs werden ausgewählte Blocktypen entfernt, die in keinem der neun Hotbar-Slots mehr vorhanden sind. Die Seitenzahl und Gewichtungs-Buttons aktualisieren sich entsprechend.
-- Gewichtungen verbleibender Hotbar-Blöcke bleiben erhalten; Blöcke im Hauptinventar zählen **nicht** zur Gewichtung.
-- Das Hauptinventar bleibt als Nachfüllvorrat verfügbar. Für den gewählten Blocktyp bleibt das automatische Hotbar-Nachfüllen aus 1.1.0 erhalten.
-- Allgemeines Hotbar-Refill und Auto Tool Switch aus 1.2.0 bleiben unverändert und separat schaltbar.
+**Neu**
+- Optionaler **Smart Random**-Schalter im K-Menü. Kürzlich gewählte Blocktypen werden bei der Gewichtsauslosung sanft bestraft (zuletzt x0,22, davor x0,58, davor x0,78). Gewichtungen bleiben die Basis und Wiederholungen sind weiterhin möglich; einzelne verbleibende Blocktypen funktionieren unverändert. Standardmäßig deaktiviert.
+- Optionales **Bau-HUD** neben der Hotbar mit Palettenstatus, Anzahl und verfügbarem Inventarvorrat ausgewählter Hotbar-Blocktypen und den Stati von Paletten-Refill, allgemeinem Refill und Auto Tool Switch. Standardmäßig aktiviert und mit dem K-Menü abschaltbar. Das HUD verwendet die offizielle Fabric HUD API und respektiert die HUD-Sichtbarkeit.
+- Alle bisherigen Funktionen der 1.2.1 bleiben bestehen. **Die Version 1.2.1 bleibt als separates Release erhalten.**
 
-### Installation
-Die bisherige `winterfell-random-palette-1.2.0.jar` entfernen und `winterfell-random-palette-1.2.1.jar` in den Fabric-26.3-`mods`-Ordner legen. Fabric API und Java 25 erforderlich. Auf dem Server muss nichts installiert werden.
+Installation: alte Version aus dem Mods-Ordner entfernen und `winterfell-random-palette-1.3.0.jar` einsetzen. Java 25 und Fabric API erforderlich, keine Server-Mod.
 
-Bei der erstmaligen Anzeige des neuen Menüs werden frühere Paletteneinträge, die nur noch im Hauptinventar liegen, dauerhaft aus der Palette entfernt. Der Build wird automatisiert geprüft; der Ingame-Test steht noch aus.
+GitHub Actions prüft die Kompilierung und erzeugt eine SHA-256-Prüfsumme. Ein anschließender Ingame-Test ist empfehlenswert.

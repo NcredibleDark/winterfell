@@ -16,6 +16,8 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 - Beim Öffnen und während der Anzeige werden Einträge automatisch entfernt, wenn der Blocktyp in keinem der neun Hotbar-Slots mehr liegt. Im Hauptinventar liegende Stacks dienen nur als Nachfüllreserve und zählen nicht zur Gewichtung.
 - Die ausgewählten Blöcke müssen für die tatsächliche Platzierung in der **Hotbar** liegen.
 - `J`: Zufallsplatzierung ein- oder ausschalten.
+- **Smart Random:** Optional per `K`-Menü aktivieren. Vergangene Blocktypen erhalten eine geringere Wahrscheinlichkeit, sodass Texturen abwechslungsreicher wirken. Die ursprünglich festgelegten Gewichtungen bleiben die Basis.
+- **Bau-HUD:** Ein kompaktes, abschaltbares HUD neben der Hotbar zeigt Palettenmodus, verfügbare Blöcke und den Status der Nachfüll-/Werkzeugfunktionen.
 - Beim normalen Platzieren wird ausschließlich zwischen den ausgewählten, in der Hotbar vorhandenen Baublöcken gewechselt. Werkzeuge sind von der Auswahl ausgeschlossen.
 - **Paletten-Auto-Nachfüllen** ist im GUI separat schaltbar (standardmäßig AN). Sobald ein so belegter Hotbar-Slot aufgebraucht ist, holt die Mod den gleichen Blocktyp aus dem Inventar nach. Nur beim Spielen, nicht während offener Inventarfenster. Zu Beginn mindestens einen passenden Blocktyp in die Hotbar legen.
 - **Hotbar-Refill** (standardmäßig AUS) füllt beliebige verbrauchte, stapelbare Hotbar-Items mit exakt gleichen Items aus dem Inventar nach – unabhängig von der Random-Palette.
