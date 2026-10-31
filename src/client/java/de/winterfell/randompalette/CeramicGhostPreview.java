@@ -10,7 +10,7 @@ import net.minecraft.client.resources.model.geometry.BakedQuad;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.GlazedTerracottaBlock;
@@ -75,7 +75,7 @@ public final class CeramicGhostPreview {
             // the actual baked block model, the glazed pattern and its orientation
             // are identical to the world model, including active resource packs.
             context.submitNodeCollector().submitCustomGeometry(
-                    pose, RenderTypes.entityTranslucent(InventoryMenu.BLOCK_ATLAS),
+                    pose, RenderTypes.entityTranslucent(Identifier.fromNamespaceAndPath("minecraft", "textures/atlas/blocks.png")),
                     (poseState, output) -> {
                         QuadInstance tint = new QuadInstance();
                         tint.setColor(GHOST_TINT);
