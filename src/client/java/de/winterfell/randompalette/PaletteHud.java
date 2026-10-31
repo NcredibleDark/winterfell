@@ -47,7 +47,7 @@ public final class PaletteHud {
         }
 
         String mode = !config.enabled ? "AUS" : config.smartRandom ? "SMART" : "ZUFALL";
-        String line1 = "WINTERFELL  |  " + mode;
+        String line1 = "Winterfell-Multimenü | " + mode;
         String line2 = "Palette " + types + " Typen | " + available + " Bloecke";
         String line3 = "P:" + on(config.enabled && config.autoRefill)
                 + "  H:" + on(config.generalRefill)

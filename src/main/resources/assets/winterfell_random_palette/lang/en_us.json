@@ -1,5 +1,6 @@
 {
- "key.category.winterfell_random_palette.main":"Winterfell Random Palette",
- "key.winterfell_random_palette.open":"Open block palette",
- "key.winterfell_random_palette.toggle":"Toggle random placement"
+  "key.category.winterfell_random_palette.main": "Winterfell-Multimenü",
+  "key.winterfell_random_palette.open": "Open Winterfell Multimenu",
+  "key.winterfell_random_palette.toggle": "Toggle random placement",
+  "key.winterfell_random_palette.toggle_hud": "Show/hide HUD"
 }

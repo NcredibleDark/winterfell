@@ -24,7 +24,7 @@ public final class PaletteScreen extends Screen {
     private int page = 0;
 
     public PaletteScreen() {
-        super(Component.literal("Winterfell Random Palette"));
+        super(Component.literal("Winterfell-Multimenü"));
     }
 
     private int left() { return (width - PANEL_W) / 2; }
@@ -107,7 +107,7 @@ public final class PaletteScreen extends Screen {
                 }).bounds(x + 199, y + 125, 115, 20).build());
         addRenderableWidget(Button.builder(
                 Component.literal(RandomPaletteClient.config.showHud
-                        ? "§aBau-HUD: AN" : "§cBau-HUD: AUS"),
+                        ? "§aHUD: AN (U)" : "§cHUD: AUS (U)"),
                 b -> {
                     RandomPaletteClient.config.showHud = !RandomPaletteClient.config.showHud;
                     RandomPaletteClient.config.save();
@@ -163,7 +163,7 @@ public final class PaletteScreen extends Screen {
         int y = top();
         graphics.fill(x, y, x + PANEL_W, y + PANEL_H, 0xE9182636);
         graphics.outline(x, y, PANEL_W, PANEL_H, 0xFF60B5E7);
-        graphics.text(font, "Winterfell Random Palette", x + 13, y + 13, 0xFFFFFFFF);
+        graphics.text(font, "Winterfell-Multimenü", x + 13, y + 13, 0xFFFFFFFF);
         graphics.text(font, "Nur Hotbar auswählbar (unterste Reihe)", x + 13, y + 36, 0xFFB7D9ED);
 
         if (minecraft.player != null) {

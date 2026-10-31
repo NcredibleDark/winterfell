@@ -1,5 +1,6 @@
 {
- "key.category.winterfell_random_palette.main":"Winterfell Random Palette",
- "key.winterfell_random_palette.open":"Palette öffnen",
- "key.winterfell_random_palette.toggle":"Zufallsplatzierung an/aus"
+  "key.category.winterfell_random_palette.main": "Winterfell-Multimenü",
+  "key.winterfell_random_palette.open": "Winterfell-Multimenü öffnen",
+  "key.winterfell_random_palette.toggle": "Zufallsplatzierung an/aus",
+  "key.winterfell_random_palette.toggle_hud": "HUD ein-/ausblenden"
 }

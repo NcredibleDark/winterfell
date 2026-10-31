@@ -31,6 +31,7 @@ public final class RandomPaletteClient implements ClientModInitializer {
             Identifier.fromNamespaceAndPath(MOD_ID, "main"));
     private static KeyMapping openKey;
     private static KeyMapping toggleKey;
+    private static KeyMapping toggleHudKey;
 
     // Slot ownership is remembered after the final block is placed.
     // We never refill a slot if the user has put a different item into it.
@@ -51,6 +52,9 @@ public final class RandomPaletteClient implements ClientModInitializer {
         toggleKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.winterfell_random_palette.toggle", InputConstants.Type.KEYBOARD,
                 InputConstants.KEY_J, CATEGORY));
+        toggleHudKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
+                "key.winterfell_random_palette.toggle_hud", InputConstants.Type.KEYBOARD,
+                InputConstants.KEY_U, CATEGORY));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (openKey.consumeClick()) {
@@ -62,6 +66,12 @@ public final class RandomPaletteClient implements ClientModInitializer {
                 if (client.player != null && client.gui.screen() == null) {
                     config.enabled = !config.enabled;
                     smartRecent.clear();
+                    config.save();
+                }
+            }
+            while (toggleHudKey.consumeClick()) {
+                if (client.player != null && client.gui.screen() == null) {
+                    config.showHud = !config.showHud;
                     config.save();
                 }
             }
