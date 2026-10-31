@@ -11,7 +11,7 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 
 ## Bedienung
 
-- `K`: **Winterfell-Multimenü** öffnen.
+- `K`: **Winterfell-Multimenü** öffnen. Unten befinden sich die drei **Server-Schnellzugriffe**: **Werkbank** (`/wb`), **Enderchest** (`/ec`) und **Mülleimer** (`/trash`). Ein Klick schließt das Multimenü und sendet den jeweiligen Befehl an den Server. Das funktioniert ohne zusätzliche Server-Mod, sofern der Server diese Befehle anbietet und der Spieler sie ausführen darf. Der bisherige **Fertig**-Button wurde in die obere Menüzeile verschoben.
 - Im GUI **nur Blöcke aus der untersten Reihe (Hotbar)** anklicken und ihre relativen Gewichte mit `+` / `-` einstellen. Die oberen drei Inventarreihen sind ausgegraut und nicht auswählbar.
 - Beim Öffnen und während der Anzeige werden Einträge automatisch entfernt, wenn der Blocktyp in keinem der neun Hotbar-Slots mehr liegt. Im Hauptinventar liegende Stacks dienen nur als Nachfüllreserve und zählen nicht zur Gewichtung.
 - Die ausgewählten Blöcke müssen für die tatsächliche Platzierung in der **Hotbar** liegen.

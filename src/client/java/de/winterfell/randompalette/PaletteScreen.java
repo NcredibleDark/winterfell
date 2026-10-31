@@ -140,8 +140,29 @@ public final class PaletteScreen extends Screen {
             }).bounds(x + 289, y + 300, 20, 18).build());
         }
 
+        // Keep the existing close action, but free the bottom row for
+        // common Winterfell server commands.
         addRenderableWidget(Button.builder(Component.literal("Fertig"), b -> onClose())
-                .bounds(x + 118, y + 331, 96, 19).build());
+                .bounds(x + 140, y + 8, 58, 20).build());
+
+        addRenderableWidget(Button.builder(Component.literal("Werkbank"), b -> runServerShortcut("wb"))
+                .bounds(x + 13, y + 331, 95, 19).build());
+        addRenderableWidget(Button.builder(Component.literal("Enderchest"), b -> runServerShortcut("ec"))
+                .bounds(x + 119, y + 331, 95, 19).build());
+        addRenderableWidget(Button.builder(Component.literal("Mülleimer"), b -> runServerShortcut("trash"))
+                .bounds(x + 225, y + 331, 95, 19).build());
+    }
+
+    /**
+     * Sends the same server command a player would type in chat.
+     * No leading slash in ClientPacketListener.sendCommand().
+     * The server still decides permissions and opens its own GUI.
+     */
+    private void runServerShortcut(String command) {
+        if (minecraft == null || minecraft.player == null || minecraft.player.connection == null)
+            return;
+        minecraft.gui.setScreen(null);
+        minecraft.player.connection.sendCommand(command);
     }
 
     private void changeWeight(String id, int diff) {
@@ -219,6 +240,7 @@ public final class PaletteScreen extends Screen {
             graphics.text(font, "Seite " + (page + 1) + "/" + pages, x + 210, y + 305, 0xFFEAF4FF);
         }
         graphics.text(font, "Hotbar = Auswahl", x + 15, y + 307, 0xFFB7C9D9);
+        graphics.text(font, "Schnellzugriff auf Server-Befehle:", x + 15, y + 319, 0xFFB7D9ED);
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
     }
 

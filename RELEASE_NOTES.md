@@ -1,20 +1,22 @@
-## Winterfell-Multimenü v1.4.0 – Glasierte-Keramik-Ghost-Vorschau
+## Winterfell-Multimenü v1.4.1 – Server-Schnellzugriffe
 
-Minecraft 26.3, Fabric, Java 25.
+Minecraft Fabric 26.3 / Java 25 / rein clientseitig.
 
-### Neu: Keramik-Ghost
-- Optionaler, separat aktivierbarer **Keramik-Ghost: AN/AUS**-Button im K-Menü.
-- Wenn glasierte Keramik in der Haupthand gehalten und ein Block anvisiert wird, erscheint an der tatsächlichen Platzierungsposition ein halbtransparentes 3D-Modell der Keramik.
-- Die Ausrichtung entspricht der Minecraft-Platzierung: Die glasierte Keramik zeigt in die zur Blickrichtung entgegengesetzte horizontale Richtung. Drehungen werden live berücksichtigt.
-- Die Vorschau übernimmt das gerenderte Blockmodell aus dem aktiven Resource-Pack, einschließlich des glasierten Musters.
-- Die Vorschau platziert keine Blöcke, verändert keine Weltzustände und sendet keine neuen Netzwerkpakete.
-- In der aktivierten Random-Palette ist die Ghost-Vorschau ausgeblendet, weil die zufällige Blockwahl den sichtbaren Block vor dem Platzieren ändern könnte. Mit **J** die Palette bei Bedarf temporär deaktivieren.
-- Standardmäßig AUS, damit das Verhalten der bewährten v1.3.4 zunächst unverändert ist.
+### Neue Schnellzugriffe im K-Menü
+- **Werkbank** sendet `/wb`.
+- **Enderchest** sendet `/ec`.
+- **Mülleimer** sendet `/trash`.
+- Die drei neuen Buttons stehen nebeneinander unten im Multimenü. Der bestehende **Fertig**-Button befindet sich jetzt oben.
+- Beim Klick schließt sich das Multimenü; der Client sendet den gewählten Befehl an den verbundenen Server. Der Server übernimmt sämtliche Berechtigungen und öffnet das zugehörige Interface.
+- Keine Serverinstallation notwendig. Auf anderen Servern funktionieren die Buttons nur, wenn dort die entsprechenden Befehle existieren und erlaubt sind.
 
-### Bestehende Funktionen
-Smart Random, Paletten-Nachfüllen, Hotbar-Refill, Auto Tool Switch, alle HUD-Funktionen und Tastenbelegungen bleiben erhalten. Version 1.3.4 bleibt als eigenes GitHub Release bestehen.
+### Weiterhin unverändert
+- Random-Palette, Smart Random und fest integriertes Paletten-Nachfüllen
+- Separates Hotbar-Refill, Auto Tool Switch, an-/ausschaltbares HUD mit U
+- Glasierte-Keramik-Ghost-Vorschau und alle bisherigen Einstellungen
+- Version 1.4.0 bleibt als separate Rückfallversion verfügbar.
 
 ### Installation
-`winterfell-random-palette-1.3.4.jar` entfernen und `winterfell-random-palette-1.4.0.jar` in den Mods-Ordner einsetzen. Fabric API und Java 25 erforderlich, Serverinstallation nicht notwendig.
+Alte `winterfell-random-palette-1.4.0.jar` entfernen und `winterfell-random-palette-1.4.1.jar` einsetzen. Fabric API und Java 25 erforderlich.
 
-Der automatische GitHub-Build prüft die Kompilierung und stellt eine SHA-256-Prüfsumme bereit. Die Darstellung mit Iris/Shadern muss im Spiel noch getestet werden.
+GitHub Actions kompiliert die Mod und prüft eine SHA-256-Prüfsumme. Die neuen Buttons müssen zur Bestätigung mit den echten Serverbefehlen auf Winterfell getestet werden.
