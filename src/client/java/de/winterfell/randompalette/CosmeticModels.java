@@ -42,7 +42,8 @@ public final class CosmeticModels {
                     mc.player.getZ() - camera.z);
 
             // Local -Z points behind the character when yaw is zero.
-            pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-mc.player.getYRot()));
+            pose.mulPose(new org.joml.Matrix4f().rotationY(
+                    (float) Math.toRadians(-mc.player.getYRot())));
             float flutter = (float)Math.sin(System.nanoTime() * 0.0000000023) * 0.065f;
             context.submitNodeCollector().submitCustomGeometry(
                     pose, RenderTypes.entityTranslucent(WHITE),

@@ -56,7 +56,7 @@ public final class CosmeticEffects {
             case "stars" -> "Sternenfunken";
             case "magic" -> "Magie";
             case "cloud" -> "Wolken";
-            case "crimson" -> "Drachenatem";
+            case "crimson" -> "Violette Magie";
             case "spark" -> "Funken";
             case "totem" -> "Totem-Aura";
             case "mist" -> "Mystischer Nebel";
@@ -94,7 +94,7 @@ public final class CosmeticEffects {
             case "stars" -> ParticleTypes.END_ROD;
             case "magic" -> ParticleTypes.ENCHANT;
             case "cloud", "mist" -> ParticleTypes.CLOUD;
-            case "crimson" -> ParticleTypes.DRAGON_BREATH;
+            case "crimson" -> ParticleTypes.WITCH;
             case "spark" -> ParticleTypes.CRIT;
             case "totem" -> ParticleTypes.TOTEM_OF_UNDYING;
             case "storm" -> ParticleTypes.ELECTRIC_SPARK;

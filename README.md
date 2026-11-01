@@ -47,7 +47,7 @@ Dieses Projekt läuft auf dem Branch `build/fabric-random-palette`, damit der Ha
 ### Drei unabhängige Kategorien
 - **Kopf – 3D:** Goldkrone, Eiskrone, Dämonenhörner, schwebender Heiligenschein, Zylinder, Katzenohren, Kopfhörer.
 - **Rücken – 3D:** Dämonen-, Engels-, Eis- und Drachenflügel, roter oder königlicher Umhang, Rucksack, Jetpack, Rückenschwert.
-- **Aura – Partikel:** Feuer, Seelenflammen, Schnee, Ender, Herzen, Sterne, Magie, Wolken, Drachenatem, Funken, Totem, mystischer Nebel und Elektrosturm.
+- **Aura – Partikel:** Feuer, Seelenflammen, Schnee, Ender, Herzen, Sterne, Magie, Wolken, violette Magie, Funken, Totem, mystischer Nebel und Elektrosturm.
 
 Die geometrischen Accessoires werden ausschließlich beim eigenen Charakter gerendert, ohne Netzwerkpakete oder Entities. Sie sind im **Drittpersonenmodus** sichtbar. Animationen und Körperhaltungen sind derzeit einfach ausgeführt; insbesondere beim Schleichen, Schwimmen und Elytra-Flug kann die Ausrichtung noch von der Vanilla-Spieleranimation abweichen. Eine Shader-/Iris-Prüfung im Spiel ist sinnvoll.
 
