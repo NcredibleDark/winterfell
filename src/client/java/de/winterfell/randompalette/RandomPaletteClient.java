@@ -47,6 +47,7 @@ public final class RandomPaletteClient implements ClientModInitializer {
         config = PaletteConfig.load();
         PaletteHud.register();
         CeramicGhostPreview.register();
+        CosmeticModels.register();
         openKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.winterfell_random_palette.open", InputConstants.Type.KEYBOARD,
                 InputConstants.KEY_K, CATEGORY));
@@ -77,7 +78,6 @@ public final class RandomPaletteClient implements ClientModInitializer {
                 }
             }
             tickAutoRefill(client);
-            CosmeticsSync.tick(client);
             CosmeticEffects.tick(client);
         });
     }

@@ -3,101 +3,117 @@ package de.winterfell.randompalette;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.entity.player.Player;
 
-/**
- * Lightweight purely client-side cosmetics. Particle effects are intentional
- * for this first release: no custom server packets or shader-specific models.
- */
+/** Small, capped particle auras attached only to the local player. */
 public final class CosmeticEffects {
+    public static final String[] HEAD_OPTIONS = {
+            "none", "crown", "horns", "halo", "top_hat", "cat_ears", "headphones", "ice_crown"
+    };
+    public static final String[] BACK_OPTIONS = {
+            "none", "demon_wings", "angel_wings", "ice_wings", "dragon_wings",
+            "red_cape", "royal_cape", "backpack", "jetpack", "back_sword"
+    };
+    public static final String[] AURA_OPTIONS = {
+            "none", "flame", "soul", "snow", "ender", "heart", "stars",
+            "magic", "cloud", "crimson", "spark", "totem", "mist", "storm"
+    };
+
     private CosmeticEffects() {}
 
-    public static boolean isValid(String id) {
-        return switch (id == null ? "" : id) {
-            case "none", "halo", "red_wings", "blue_wings", "flame_aura" -> true;
-            default -> false;
-        };
+    public static boolean validHead(String id) { return contains(HEAD_OPTIONS, id); }
+    public static boolean validBack(String id) { return contains(BACK_OPTIONS, id); }
+    public static boolean validAura(String id) { return contains(AURA_OPTIONS, id); }
+
+    private static boolean contains(String[] array, String id) {
+        if (id == null) return false;
+        for (String known : array) if (known.equals(id)) return true;
+        return false;
     }
 
     public static String displayName(String id) {
         return switch (id == null ? "" : id) {
-            case "halo" -> "Heiligenschein";
-            case "red_wings" -> "Dämonenflügel (Partikel)";
-            case "blue_wings" -> "Eisflügel (Partikel)";
-            case "flame_aura" -> "Flammenaura";
-            default -> "Keine Cosmetics";
+            case "crown" -> "Goldkrone";
+            case "ice_crown" -> "Eiskrone";
+            case "horns" -> "Dämonenhörner";
+            case "halo" -> "3D-Heiligenschein";
+            case "top_hat" -> "Zylinder";
+            case "cat_ears" -> "Katzenohren";
+            case "headphones" -> "Kopfhörer";
+            case "demon_wings" -> "Dämonenflügel";
+            case "angel_wings" -> "Engelsflügel";
+            case "ice_wings" -> "Eisflügel";
+            case "dragon_wings" -> "Drachenflügel";
+            case "red_cape" -> "Roter Umhang";
+            case "royal_cape" -> "Königsumhang";
+            case "backpack" -> "Abenteurerrucksack";
+            case "jetpack" -> "Jetpack";
+            case "back_sword" -> "Rückenschwert";
+            case "flame" -> "Feuer";
+            case "soul" -> "Seelenflammen";
+            case "snow" -> "Schneeflocken";
+            case "ender" -> "Enderpartikel";
+            case "heart" -> "Herzen";
+            case "stars" -> "Sternenfunken";
+            case "magic" -> "Magie";
+            case "cloud" -> "Wolken";
+            case "crimson" -> "Drachenatem";
+            case "spark" -> "Funken";
+            case "totem" -> "Totem-Aura";
+            case "mist" -> "Mystischer Nebel";
+            case "storm" -> "Elektrosturm";
+            default -> "Keines";
         };
     }
 
-    private static int ticks = 0;
+    private static int ticks;
 
     public static void tick(Minecraft mc) {
-        if (mc.level == null || mc.player == null || RandomPaletteClient.config == null) {
+        PaletteConfig cfg = RandomPaletteClient.config;
+        if (cfg == null || !cfg.cosmeticsEnabled || mc.level == null
+                || mc.player == null || mc.player.isSpectator() || mc.player.isInvisible()) {
             ticks = 0;
             return;
         }
-        // Four updates per second; also avoid generating particles with GUIs open.
-        if (++ticks % 5 != 0 || mc.gui.screen() != null) return;
-        int drawn = 0;
-        for (Player player : mc.level.players()) {
-            if (drawn >= 20) break;
-            if (player.isInvisible() || player.isSpectator()
-                    || mc.player.distanceToSqr(player) > 32.0 * 32.0) continue;
-            boolean self = player.getUUID().equals(mc.player.getUUID());
-            if (!self && !RandomPaletteClient.config.showOtherCosmetics) continue;
-            String cosmetic = self ? RandomPaletteClient.config.cosmetic
-                    : CosmeticsSync.choiceFor(player.getUUID());
-            if (!isValid(cosmetic) || "none".equals(cosmetic)) continue;
-            drawn++;
-            switch (cosmetic) {
-                case "halo" -> halo(mc, player);
-                case "red_wings" -> wings(mc, player, ParticleTypes.WITCH);
-                case "blue_wings" -> wings(mc, player, ParticleTypes.SOUL_FIRE_FLAME);
-                case "flame_aura" -> aura(mc, player);
-                default -> {}
-            }
-        }
-    }
+        String id = cfg.auraCosmetic;
+        if (!validAura(id) || "none".equals(id)) return;
 
-    private static void halo(Minecraft mc, Player player) {
-        double t = (ticks % 1000) * 0.19;
-        double y = player.getY() + player.getBbHeight() + 0.19;
-        for (int i = 0; i < 4; i++) {
-            double angle = t + i * Math.PI / 2.0;
-            spawn(mc, ParticleTypes.END_ROD,
-                    player.getX() + 0.34 * Math.cos(angle), y,
-                    player.getZ() + 0.34 * Math.sin(angle));
-        }
-    }
+        ticks++;
+        int interval = switch (cfg.particleIntensity) {
+            case 1 -> 5;
+            case 2 -> 3;
+            default -> 9;
+        };
+        if (ticks % interval != 0) return;
 
-    private static void wings(Minecraft mc, Player player, ParticleOptions particle) {
-        double rad = Math.toRadians(player.getYRot());
-        double backX = Math.sin(rad), backZ = -Math.cos(rad);
-        double rightX = Math.cos(rad), rightZ = Math.sin(rad);
-        double flap = Math.sin(ticks * 0.13) * 0.08;
-        double[] widths = {0.32, 0.55, 0.78, 0.98, 0.76, 0.58, 0.43};
-        double[] heights = {1.42, 1.66, 1.77, 1.66, 1.38, 1.16, 0.98};
-        double x = player.getX() + backX * 0.30;
-        double z = player.getZ() + backZ * 0.30;
-        for (int side : new int[]{-1, 1}) {
-            for (int i = 0; i < widths.length; i++) {
-                double w = side * (widths[i] + flap);
-                spawn(mc, particle, x + rightX * w,
-                        player.getY() + heights[i], z + rightZ * w);
-            }
+        ParticleOptions particle = switch (id) {
+            case "flame" -> ParticleTypes.FLAME;
+            case "soul" -> ParticleTypes.SOUL_FIRE_FLAME;
+            case "snow" -> ParticleTypes.SNOWFLAKE;
+            case "ender" -> ParticleTypes.PORTAL;
+            case "heart" -> ParticleTypes.HEART;
+            case "stars" -> ParticleTypes.END_ROD;
+            case "magic" -> ParticleTypes.ENCHANT;
+            case "cloud", "mist" -> ParticleTypes.CLOUD;
+            case "crimson" -> ParticleTypes.DRAGON_BREATH;
+            case "spark" -> ParticleTypes.CRIT;
+            case "totem" -> ParticleTypes.TOTEM_OF_UNDYING;
+            case "storm" -> ParticleTypes.ELECTRIC_SPARK;
+            default -> null;
+        };
+        if (particle == null) return;
+        // Maximum four particles per burst even at highest intensity.
+        int amount = cfg.particleIntensity == 2 ? 4 : cfg.particleIntensity == 1 ? 3 : 2;
+        for (int i = 0; i < amount; i++) {
+            double angle = (ticks * 0.25 + i * (2.0 * Math.PI / amount));
+            double radius = 0.39 + (i % 2) * 0.14;
+            double y = mc.player.getY() + 0.18 + (i % 3) * 0.52;
+            if ("heart".equals(id) || "stars".equals(id)) y += 0.35;
+            if ("mist".equals(id) || "cloud".equals(id)) y = mc.player.getY() + 0.11;
+            mc.level.addParticle(particle,
+                    mc.player.getX() + Math.cos(angle) * radius,
+                    y,
+                    mc.player.getZ() + Math.sin(angle) * radius,
+                    0.0, 0.005, 0.0);
         }
-    }
-
-    private static void aura(Minecraft mc, Player player) {
-        for (int i = 0; i < 5; i++) {
-            double angle = ticks * 0.15 + i * Math.PI * 0.4;
-            spawn(mc, ParticleTypes.FLAME, player.getX() + Math.cos(angle) * 0.48,
-                    player.getY() + 0.09 + (i % 3) * 0.29,
-                    player.getZ() + Math.sin(angle) * 0.48);
-        }
-    }
-
-    private static void spawn(Minecraft mc, ParticleOptions particle, double x, double y, double z) {
-        mc.level.addParticle(particle, x, y, z, 0.0, 0.003, 0.0);
     }
 }

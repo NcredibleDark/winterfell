@@ -27,22 +27,39 @@ public final class PaletteConfig {
     public boolean smartRandom = false;
     public boolean showHud = true;
     public boolean ceramicGhostPreview = false;
-    public String cosmetic = "none";
-    public boolean showOtherCosmetics = true;
-    // Never publish this file: the token controls your public cosmetic choice.
-    public String cosmeticsServiceUrl = "";
-    public String cosmeticsAccessToken = "";
+    public boolean cosmeticsEnabled = true;
+    public String headCosmetic = "none";
+    public String backCosmetic = "none";
+    public String auraCosmetic = "none";
+    // 0=sparsam, 1=normal, 2=intensiv; older configs migrate silently.
+    public int particleIntensity = 0;
     public LinkedHashMap<String, Integer> weights = new LinkedHashMap<>();
 
     public static PaletteConfig load() {
         if (!Files.isRegularFile(PATH)) return new PaletteConfig();
         try (Reader reader = Files.newBufferedReader(PATH)) {
-            PaletteConfig config = GSON.fromJson(reader, PaletteConfig.class);
+            com.google.gson.JsonObject oldJson =
+                    com.google.gson.JsonParser.parseReader(reader).getAsJsonObject();
+            PaletteConfig config = GSON.fromJson(oldJson, PaletteConfig.class);
             if (config == null) return new PaletteConfig();
             if (config.weights == null) config.weights = new LinkedHashMap<>();
-            if (!CosmeticEffects.isValid(config.cosmetic)) config.cosmetic = "none";
-            if (config.cosmeticsServiceUrl == null) config.cosmeticsServiceUrl = "";
-            if (config.cosmeticsAccessToken == null) config.cosmeticsAccessToken = "";
+            // Upgrade cosmetic choices from v1.5.0 without retaining sync secrets.
+            if (oldJson.has("cosmetic") && oldJson.get("cosmetic").isJsonPrimitive()) {
+                String legacy = oldJson.get("cosmetic").getAsString();
+                switch (legacy) {
+                    case "halo" -> config.headCosmetic = "halo";
+                    case "red_wings" -> config.backCosmetic = "demon_wings";
+                    case "blue_wings" -> config.backCosmetic = "ice_wings";
+                    case "flame_aura" -> config.auraCosmetic = "flame";
+                    default -> {}
+                }
+            }
+            if (!CosmeticEffects.validHead(config.headCosmetic)) config.headCosmetic = "none";
+            if (!CosmeticEffects.validBack(config.backCosmetic)) config.backCosmetic = "none";
+            if (!CosmeticEffects.validAura(config.auraCosmetic)) config.auraCosmetic = "none";
+            config.particleIntensity = Math.max(0, Math.min(2, config.particleIntensity));
+            // Re-save to remove the obsolete remote address and access token.
+            config.save();
             config.weights.entrySet().removeIf(e -> e.getKey() == null || e.getKey().isBlank()
                     || e.getValue() == null || e.getValue() <= 0);
             for (Map.Entry<String, Integer> e : config.weights.entrySet()) {

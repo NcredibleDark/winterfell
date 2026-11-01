@@ -34,9 +34,6 @@ jobs:
           test -n "$VERSION"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Test cosmetics synchronization service
-        run: python3 -m unittest discover -s cosmetics-service -p 'test_*.py'
-
       - name: Compile and verify mod
         run: gradle build --stacktrace
 

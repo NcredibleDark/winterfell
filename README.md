@@ -11,7 +11,7 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 
 ## Bedienung
 
-- **Cosmetics-Garderobe**: Im K-Menü auf **Cosmetics / Garderobe** klicken. Eigene Partikel-Cosmetics wählen: Heiligenschein, rote oder blaue Partikel-Flügel, Flammenaura oder keines. Andere Mod-Spieler mit dem gleichen Dienst sehen die Auswahl, sobald die optionale HTTPS-Synchronisierung eingerichtet ist. Details unten.
+- **Cosmetics-Garderobe**: Im K-Menü auf **Cosmetics / Garderobe** klicken. Es gibt jetzt drei separat kombinierbare Kategorien: Kopf, Rücken (3D-Accessoires) und Aura (Partikel). Die Auswahl ist **nur für den eigenen Spieler sichtbar** und wird lokal gespeichert. Kein Dienst, keine API-Schlüssel, kein Paper-Plugin. 3D-Accessoires sieht man in der Drittpersonenansicht (F5).
 - `K`: **Winterfell-Multimenü** öffnen. Unten befinden sich die drei **Server-Schnellzugriffe**: **Werkbank** (`/wb`), **Enderchest** (`/ec`) und **Mülleimer** (`/trash`). Ein Klick schließt das Multimenü und sendet den jeweiligen Befehl an den Server. Das funktioniert ohne zusätzliche Server-Mod, sofern der Server diese Befehle anbietet und der Spieler sie ausführen darf. Der bisherige **Fertig**-Button wurde in die obere Menüzeile verschoben.
 - Im GUI **nur Blöcke aus der untersten Reihe (Hotbar)** anklicken und ihre relativen Gewichte mit `+` / `-` einstellen. Die oberen drei Inventarreihen sind ausgegraut und nicht auswählbar.
 - Beim Öffnen und während der Anzeige werden Einträge automatisch entfernt, wenn der Blocktyp in keinem der neun Hotbar-Slots mehr liegt. Im Hauptinventar liegende Stacks dienen nur als Nachfüllreserve und zählen nicht zur Gewichtung.
@@ -40,21 +40,20 @@ Ein Push auf `build/fabric-random-palette` kompiliert die Mod und veröffentlich
 
 Dieses Projekt läuft auf dem Branch `build/fabric-random-palette`, damit der Hauptzweig der Android-App unverändert bleibt.
 
+## Winterfell-Cosmetics v1.6.0 – komplett lokal
 
-## Winterfell-Cosmetics (v1.5.0 – erste Version)
+**Keine externe Synchronisierung mehr.** Cosmetics gehören nur dem Spieler, der sie auswählt: Andere Java-/Bedrock-Spieler sehen sie nicht, selbst wenn sie die Mod installiert haben. Die bisherige `CosmeticsSync` ist entfernt; die gespeicherten Dienst-URLs/Tokens werden nach dem ersten Start aus der JSON-Konfiguration entfernt. Bereits ausgewählte Cosmetics werden nach Möglichkeit in die neuen Slots übernommen.
 
-Die Cosmetics sind zunächst **Partikel-Cosmetics** (kein massives 3D-Modell). Die eigene Auswahl und der Schalter **Andere Cosmetics anzeigen** funktionieren direkt lokal. Die Darstellung ist nur clientseitig; Vanilla- und Bedrock-Spieler sehen sie nicht.
+### Drei unabhängige Kategorien
+- **Kopf – 3D:** Goldkrone, Eiskrone, Dämonenhörner, schwebender Heiligenschein, Zylinder, Katzenohren, Kopfhörer.
+- **Rücken – 3D:** Dämonen-, Engels-, Eis- und Drachenflügel, roter oder königlicher Umhang, Rucksack, Jetpack, Rückenschwert.
+- **Aura – Partikel:** Feuer, Seelenflammen, Schnee, Ender, Herzen, Sterne, Magie, Wolken, Drachenatem, Funken, Totem, mystischer Nebel und Elektrosturm.
 
-**Damit Spieler mit der Mod gegenseitig die Cosmetics sehen**, muss der unabhängige Dienst in `cosmetics-service/server.py` auf einer HTTPS-Adresse erreichbar sein. Das ist eine eigenständige Python-Anwendung, **kein Paper-Plugin**. Ohne eingerichteten Dienst zeigt der Client nur das eigene Cosmetic.
+Die geometrischen Accessoires werden ausschließlich beim eigenen Charakter gerendert, ohne Netzwerkpakete oder Entities. Sie sind im **Drittpersonenmodus** sichtbar. Animationen und Körperhaltungen sind derzeit einfach ausgeführt; insbesondere beim Schleichen, Schwimmen und Elytra-Flug kann die Ausrichtung noch von der Vanilla-Spieleranimation abweichen. Eine Shader-/Iris-Prüfung im Spiel ist sinnvoll.
 
-**Einrichtung (Serveradministrator):**
-1. Python 3.10+ auf einem Webhost installieren. `python3 cosmetics-service/server.py serve` startet lokal auf `127.0.0.1:8765`; davor einen HTTPS-Reverse-Proxy einrichten. Nicht unverschlüsselt ins Internet stellen.
-2. Für jeden Spieler die echte Online-Minecraft-UUID ermitteln und `python3 cosmetics-service/server.py issue UUID` ausführen. Der ausgegebene Schlüssel gehört **nur diesem Spieler**. Bei erneuter Ausgabe wird sein alter Schlüssel ungültig.
-3. Jeder Spieler startet die Mod einmal und trägt in `config/winterfell-random-palette.json` beispielsweise Folgendes ein (bestehende Optionen nicht löschen):
-   - `"cosmeticsServiceUrl": "https://cosmetics.example.com"`
-   - `"cosmeticsAccessToken": "INDIVIDUELLER_SCHLUESSEL"`
-4. Minecraft neu starten oder die Mod-Konfiguration vor dem Start bearbeiten. Im Cosmetics-Menü steht anschließend der Synchronisierungsstatus.
+Im Cosmetics-Menü lässt sich das gesamte System ein-/ausschalten und die **Partikeldichte** auf Sparsam (Standard), Normal oder Intensiv ändern. Bei deinen früheren FPS-Problemen mit vielen Partikeln würde ich **Sparsam** bevorzugen.
 
-Der Dienst speichert ausschließlich Spieler-UUID, Cosmetics-Auswahl und Hash des Zugangsschlüssels in SQLite. **Keine Minecraft-, Microsoft- oder Mojang-Zugangsdaten werden benötigt.** Den privaten Schlüssel und die Konfigurationsdatei nicht weitergeben oder auf GitHub veröffentlichen. Die UUID muss im administrativen Pairing korrekt zugeordnet sein; andernfalls ist der Schlüssel nicht für die eigene UUID gültig.
+### Unverändert
+Random-Palette, Smart Random, Paletten-Nachfüllen, Hotbar-Refill, Auto Tool Switch, HUD, Keramik-Ghost und die Server-Buttons /wb /ec /trash.
 
-Im Singleplayer bleibt die Auswahl lokal. Die Kommunikation wird asynchron (ca. alle 5 Sekunden) vorgenommen und ist optional; bei Netzwerkausfall funktioniert das Spiel weiter. Der Betrieb des Dienstes ist nötig, um Änderungen zwischen verschiedenen Clients zu übertragen.
+**Installation:** Die vorige Mod-JAR vollständig entfernen und die v1.6.0-JAR in das Minecraft-26.3-Fabric-Profil kopieren. Fabric API und Java 25 sind erforderlich.
