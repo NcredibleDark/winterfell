@@ -77,6 +77,8 @@ public final class RandomPaletteClient implements ClientModInitializer {
                 }
             }
             tickAutoRefill(client);
+            CosmeticsSync.tick(client);
+            CosmeticEffects.tick(client);
         });
     }
 

@@ -27,6 +27,11 @@ public final class PaletteConfig {
     public boolean smartRandom = false;
     public boolean showHud = true;
     public boolean ceramicGhostPreview = false;
+    public String cosmetic = "none";
+    public boolean showOtherCosmetics = true;
+    // Never publish this file: the token controls your public cosmetic choice.
+    public String cosmeticsServiceUrl = "";
+    public String cosmeticsAccessToken = "";
     public LinkedHashMap<String, Integer> weights = new LinkedHashMap<>();
 
     public static PaletteConfig load() {
@@ -35,6 +40,9 @@ public final class PaletteConfig {
             PaletteConfig config = GSON.fromJson(reader, PaletteConfig.class);
             if (config == null) return new PaletteConfig();
             if (config.weights == null) config.weights = new LinkedHashMap<>();
+            if (!CosmeticEffects.isValid(config.cosmetic)) config.cosmetic = "none";
+            if (config.cosmeticsServiceUrl == null) config.cosmeticsServiceUrl = "";
+            if (config.cosmeticsAccessToken == null) config.cosmeticsAccessToken = "";
             config.weights.entrySet().removeIf(e -> e.getKey() == null || e.getKey().isBlank()
                     || e.getValue() == null || e.getValue() <= 0);
             for (Map.Entry<String, Integer> e : config.weights.entrySet()) {

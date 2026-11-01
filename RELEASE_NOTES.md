@@ -1,22 +1,14 @@
-## Winterfell-Multimenü v1.4.1 – Server-Schnellzugriffe
+## Winterfell-Multimenü 1.5.0 – Winterfell-Cosmetics (erste Version)
 
-Minecraft Fabric 26.3 / Java 25 / rein clientseitig.
+**Neu: Gemeinsame Cosmetics für Spieler mit der Mod**
+- Eigenes **Cosmetics / Garderobe**-Menü im bestehenden K-Menü
+- Partikel-Cosmetics: Heiligenschein, rote Dämonenflügel, blaue Eisflügel und Flammenaura; lokal jederzeit wechselbar
+- Anzeige von Cosmetics anderer Spieler mit der Mod, wenn beide Clients denselben externen HTTPS-Cosmetics-Dienst verwenden
+- Einstellbar, ob andere Cosmetics dargestellt werden; Distanz- und Partikelbegrenzung
+- Optionaler, eigenständiger Python-HTTP-/SQLite-Dienst unter `cosmetics-service/`
+- Spielergebundene, durch Admin ausgegebene Token schützen Änderungen vor Identitätsfälschung; keine Minecraft-Kontodaten nötig
+- **Keine Änderungen am Paper-Server** und keine zusätzlichen Serverpakete
+- Vor der gemeinsamen Nutzung muss der Dienst extern über HTTPS bereitgestellt und pro Spieler eingerichtet werden. Ohne Dienst funktionieren lokale Cosmetics.
+- Alle bisherigen Bau-, Keramik-Ghost-, HUD- und Kommando-Funktionen bleiben erhalten.
 
-### Neue Schnellzugriffe im K-Menü
-- **Werkbank** sendet `/wb`.
-- **Enderchest** sendet `/ec`.
-- **Mülleimer** sendet `/trash`.
-- Die drei neuen Buttons stehen nebeneinander unten im Multimenü. Der bestehende **Fertig**-Button befindet sich jetzt oben.
-- Beim Klick schließt sich das Multimenü; der Client sendet den gewählten Befehl an den verbundenen Server. Der Server übernimmt sämtliche Berechtigungen und öffnet das zugehörige Interface.
-- Keine Serverinstallation notwendig. Auf anderen Servern funktionieren die Buttons nur, wenn dort die entsprechenden Befehle existieren und erlaubt sind.
-
-### Weiterhin unverändert
-- Random-Palette, Smart Random und fest integriertes Paletten-Nachfüllen
-- Separates Hotbar-Refill, Auto Tool Switch, an-/ausschaltbares HUD mit U
-- Glasierte-Keramik-Ghost-Vorschau und alle bisherigen Einstellungen
-- Version 1.4.0 bleibt als separate Rückfallversion verfügbar.
-
-### Installation
-Alte `winterfell-random-palette-1.4.0.jar` entfernen und `winterfell-random-palette-1.4.1.jar` einsetzen. Fabric API und Java 25 erforderlich.
-
-GitHub Actions kompiliert die Mod und prüft eine SHA-256-Prüfsumme. Die neuen Buttons müssen zur Bestätigung mit den echten Serverbefehlen auf Winterfell getestet werden.
+**Installation:** Alte 1.4.1-JAR entfernen, 1.5.0-JAR ins Fabric-26.3-Profil legen. Fabric API, Java 25. Bitte erst Ingame-Darstellung und Synchronisierung mit zwei Client-Instanzen prüfen.
