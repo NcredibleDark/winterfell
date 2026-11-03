@@ -34,6 +34,10 @@ public final class PaletteConfig {
     // 0=sparsam, 1=normal, 2=intensiv; older configs migrate silently.
     public int particleIntensity = 0;
     public LinkedHashMap<String, Integer> weights = new LinkedHashMap<>();
+    // Client-only shortcuts. Each key combines the multiplayer server and
+    // Minecraft account UUID, so homes never mix across servers or players.
+    public LinkedHashMap<String, java.util.ArrayList<String>> homeBookmarks = new LinkedHashMap<>();
+    public LinkedHashMap<String, java.util.ArrayList<String>> warpBookmarks = new LinkedHashMap<>();
 
     public static PaletteConfig load() {
         if (!Files.isRegularFile(PATH)) return new PaletteConfig();
@@ -43,6 +47,10 @@ public final class PaletteConfig {
             PaletteConfig config = GSON.fromJson(oldJson, PaletteConfig.class);
             if (config == null) return new PaletteConfig();
             if (config.weights == null) config.weights = new LinkedHashMap<>();
+            if (config.homeBookmarks == null) config.homeBookmarks = new LinkedHashMap<>();
+            if (config.warpBookmarks == null) config.warpBookmarks = new LinkedHashMap<>();
+            config.homeBookmarks.values().removeIf(java.util.Objects::isNull);
+            config.warpBookmarks.values().removeIf(java.util.Objects::isNull);
             // Upgrade cosmetic choices from v1.5.0 without retaining sync secrets.
             if (oldJson.has("cosmetic") && oldJson.get("cosmetic").isJsonPrimitive()) {
                 String legacy = oldJson.get("cosmetic").getAsString();

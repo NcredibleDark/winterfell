@@ -1,16 +1,21 @@
-## Winterfell-Multimenü v1.6.0 – Cosmetics 3D & Local Only
+## Winterfell-Multimenü v1.7.0 – Homes & Warps im K-Menü
 
 ### Neu
-- Keine externe Synchronisierung mehr; **nur du siehst deine Cosmetics**.
-- Drei unabhängig wählbare Kategorien: **Kopf (7 3D-Modelle)**, **Rücken (9 3D-Modelle)** und **Aura (13 Partikeleffekte)**, jeweils mit „Keines“.
-- 3D-Modelle folgen dem Spieler und seiner horizontalen Blick-/Körperrichtung und sind im Drittpersonenmodus sichtbar.
-- Komplette Cosmetics-Anzeige per AN/AUS-Schalter deaktivierbar; Partikelstufen **Sparsam/Normal/Intensiv**.
-- Vorhandene Cosmetic-Auswahl aus v1.5.0 wird nach Möglichkeit übernommen. Ehemalige URL- und Token-Felder werden aus der lokalen Konfiguration entfernt.
-- Kein HTTP, kein Token, kein Python-Backend, keine Serveränderungen.
-- Die bisherige Baufunktionalität, das Keramik-Ghost, das HUD und die Server-Schnellzugriffe bleiben erhalten.
+- Neuer **Homes**-Button direkt neben Cosmetics im bestehenden Winterfell-Multimenü.
+- Eigenes GUI mit getrennten Tabs **Eigene Homes** und **Öffentliche Warps**.
+- Home-/Warp-Namen einmalig im Client als Favoriten hinterlegen; anschließend durch Anklicken sofort `/home <name>` oder `/warp <name>` ausführen.
+- Favoriten werden pro Multiplayer-Server und Minecraft-Konto getrennt gespeichert und sind über mehrere Seiten navigierbar.
+- **Serverliste anzeigen:** `/homelist` für eigene Homes beziehungsweise `/warplist` für Warps.
+- **Home hier setzen:** direkt über `/sethome <name>`.
+- **Öffentliche Homes:** Link zum vorhandenen HuskHomes-Befehl `/phomelist`.
+- `✕` entfernt nur einen lokalen Favoriten, niemals das echte Server-Home.
+- Serverseitige Berechtigungen, Cooldowns und Teleports bleiben vollständig unter HuskHomes-Kontrolle.
 
-### Hinweis zur Darstellung
-Die 3D-Accessoires sind eine erste geometrische Modellserie, **kein fertig animiertes Launcher-Cosmetics-System**. Animationen wie Schwimmen/Elytra-Flug und die Verträglichkeit mit Iris/Complementary müssen im Spiel getestet werden. Drittpersonenansicht F5 verwenden. Partikel sind standardmäßig sparsam.
+### Einschränkung
+Ohne Serverplugin/API kann die Mod die komplette HuskHomes-Home-Liste nicht direkt lesen. Die klickbaren Favoriten werden deshalb einmalig von Hand hinzugefügt; die bereits existierende Serverliste ist über den Button weiterhin zugänglich. Es ist **kein neues Paper-Plugin** nötig.
+
+### Unverändert
+Random-Palette, Smart Random, automatisches Nachfüllen, Hotbar-Refill, Werkzeugwechsel, Ghost-Vorschau, HUD, Cosmetics (nur lokal) und /wb /ec /trash.
 
 ### Installation
-`winterfell-random-palette-1.5.0.jar` entfernen und `winterfell-random-palette-1.6.0.jar` in den Fabric-26.3-Mods-Ordner legen. Java 25, Fabric API erforderlich.
+Vorherige Version entfernen und `winterfell-random-palette-1.7.0.jar` mit Fabric 26.3 und Java 25 nutzen. Build wird automatisch getestet; die Bedienung muss anschließend im Spiel auf Winterfell geprüft werden.

@@ -12,6 +12,7 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 ## Bedienung
 
 - **Cosmetics-Garderobe**: Im K-Menü auf **Cosmetics / Garderobe** klicken. Es gibt jetzt drei separat kombinierbare Kategorien: Kopf, Rücken (3D-Accessoires) und Aura (Partikel). Die Auswahl ist **nur für den eigenen Spieler sichtbar** und wird lokal gespeichert. Kein Dienst, keine API-Schlüssel, kein Paper-Plugin. 3D-Accessoires sieht man in der Drittpersonenansicht (F5).
+- **Homes & Warps (v1.7.0):** Im `K`-Menü auf **Homes** klicken. Eine eigene Client-GUI erlaubt das einmalige Speichern von Home- und Warp-Namen als klickbare Favoriten. Ein Klick sendet `/home <name>` oder `/warp <name>` an HuskHomes. **Serverliste anzeigen** führt `/homelist` beziehungsweise `/warplist` aus, **Home hier setzen** führt `/sethome <name>` aus. Zusätzlich ist `/phomelist` erreichbar. Favoriten sind pro Server und Minecraft-Konto getrennt gespeichert und können mit `✕` nur lokal entfernt werden; das entfernt keine echten Homes. **Eine automatische Liste aller Server-Homes ist ohne serverseitige Schnittstelle nicht verfügbar.** Keine zusätzliche Serverinstallation notwendig.
 - `K`: **Winterfell-Multimenü** öffnen. Unten befinden sich die drei **Server-Schnellzugriffe**: **Werkbank** (`/wb`), **Enderchest** (`/ec`) und **Mülleimer** (`/trash`). Ein Klick schließt das Multimenü und sendet den jeweiligen Befehl an den Server. Das funktioniert ohne zusätzliche Server-Mod, sofern der Server diese Befehle anbietet und der Spieler sie ausführen darf. Der bisherige **Fertig**-Button wurde in die obere Menüzeile verschoben.
 - Im GUI **nur Blöcke aus der untersten Reihe (Hotbar)** anklicken und ihre relativen Gewichte mit `+` / `-` einstellen. Die oberen drei Inventarreihen sind ausgegraut und nicht auswählbar.
 - Beim Öffnen und während der Anzeige werden Einträge automatisch entfernt, wenn der Blocktyp in keinem der neun Hotbar-Slots mehr liegt. Im Hauptinventar liegende Stacks dienen nur als Nachfüllreserve und zählen nicht zur Gewichtung.
@@ -54,6 +55,6 @@ Die geometrischen Accessoires werden ausschließlich beim eigenen Charakter gere
 Im Cosmetics-Menü lässt sich das gesamte System ein-/ausschalten und die **Partikeldichte** auf Sparsam (Standard), Normal oder Intensiv ändern. Bei deinen früheren FPS-Problemen mit vielen Partikeln würde ich **Sparsam** bevorzugen.
 
 ### Unverändert
-Random-Palette, Smart Random, Paletten-Nachfüllen, Hotbar-Refill, Auto Tool Switch, HUD, Keramik-Ghost und die Server-Buttons /wb /ec /trash.
+Random-Palette, Smart Random, Paletten-Nachfüllen, Hotbar-Refill, Auto Tool Switch, HUD, Keramik-Ghost und die Server-Buttons /wb /ec /trash. In v1.7.0 kommt zusätzlich die Homes-GUI mit lokalen Favoriten dazu.
 
 **Installation:** Die vorige Mod-JAR vollständig entfernen und die v1.6.0-JAR in das Minecraft-26.3-Fabric-Profil kopieren. Fabric API und Java 25 sind erforderlich.

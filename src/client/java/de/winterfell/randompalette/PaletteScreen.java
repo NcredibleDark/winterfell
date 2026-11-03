@@ -118,9 +118,12 @@ public final class PaletteScreen extends Screen {
 
         // The Cosmetics wardrobe lives in its own page, without moving or
         // overlapping any of the established palette controls.
-        addRenderableWidget(Button.builder(Component.literal("Cosmetics / Garderobe"),
+        addRenderableWidget(Button.builder(Component.literal("Cosmetics"),
                 b -> minecraft.gui.setScreen(new CosmeticsScreen()))
-                .bounds(x + 15, y + 142, 174, 19).build());
+                .bounds(x + 15, y + 142, 84, 19).build());
+        addRenderableWidget(Button.builder(Component.literal("Homes"),
+                b -> minecraft.gui.setScreen(new HomesScreen()))
+                .bounds(x + 104, y + 142, 85, 19).build());
 
         List<String> ids = new ArrayList<>(RandomPaletteClient.config.weights.keySet());
         int pages = Math.max(1, (ids.size() + PER_PAGE - 1) / PER_PAGE);
