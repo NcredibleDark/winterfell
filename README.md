@@ -11,6 +11,7 @@ Clientseitige Fabric-Mod für **Minecraft 26.3**. Sie erleichtert das Texturiere
 
 ## Bedienung
 
+- **Homes & Warps (v1.4.2, ohne Cosmetics):** Im `K`-Menü **Homes & Warps** anklicken. Die Mod fragt beim Öffnen automatisch über Minecraft-Brigadier/TAB-Vorschläge die vom Server bereitgestellten Home-Namen (`/home <name>`) ab. Der Reiter **Öffentliche Warps** fragt auf dieselbe Weise `/warp <name>` ab. Ein Klick sendet den entsprechenden normalen Serverbefehl. **Aktualisieren** fragt erneut ab; **Serverliste** bietet `/homelist` bzw. `/warplist` als Fallback. **Keine Favoriten und keine eigene Serverinstallation nötig.** Wichtig: Der Server muss die Namen über die Befehlsvervollständigung anbieten; Berechtigungen und begrenzte Vorschlagslisten können die angezeigten Ziele einschränken. Der eigentliche `/home`- oder `/warp`-Befehl wird erst beim Klick auf ein Ziel ausgeführt (so kann kein unbeabsichtigter Teleport passieren).
 - `K`: **Winterfell-Multimenü** öffnen. Unten befinden sich die drei **Server-Schnellzugriffe**: **Werkbank** (`/wb`), **Enderchest** (`/ec`) und **Mülleimer** (`/trash`). Ein Klick schließt das Multimenü und sendet den jeweiligen Befehl an den Server. Das funktioniert ohne zusätzliche Server-Mod, sofern der Server diese Befehle anbietet und der Spieler sie ausführen darf. Der bisherige **Fertig**-Button wurde in die obere Menüzeile verschoben.
 - Im GUI **nur Blöcke aus der untersten Reihe (Hotbar)** anklicken und ihre relativen Gewichte mit `+` / `-` einstellen. Die oberen drei Inventarreihen sind ausgegraut und nicht auswählbar.
 - Beim Öffnen und während der Anzeige werden Einträge automatisch entfernt, wenn der Blocktyp in keinem der neun Hotbar-Slots mehr liegt. Im Hauptinventar liegende Stacks dienen nur als Nachfüllreserve und zählen nicht zur Gewichtung.
@@ -35,6 +36,6 @@ Ein GitHub Release ist kein Ersatz für eine Prüfung der Dateien. Chrome kann w
 
 ## Entwicklung
 
-Ein Push auf `build/fabric-random-palette` kompiliert die Mod und veröffentlicht automatisch ein neues GitHub Release, **wenn `mod_version` in `gradle.properties` noch nicht veröffentlicht wurde**. Bestehende Releases werden absichtlich nicht überschrieben. Für Updates die Versionsnummer erhöhen.
+Ein Push auf `build/fabric-random-palette-1.4.x` kompiliert die Mod und veröffentlicht automatisch ein neues GitHub Release, **wenn `mod_version` in `gradle.properties` noch nicht veröffentlicht wurde**. Bestehende Releases werden absichtlich nicht überschrieben. Für Updates die Versionsnummer erhöhen.
 
-Dieses Projekt läuft auf dem Branch `build/fabric-random-palette`, damit der Hauptzweig der Android-App unverändert bleibt.
+Dieser Stand basiert exakt auf **1.4.1 vor der Cosmetics-Erweiterung** und liegt auf dem separaten Branch `build/fabric-random-palette-1.4.x`. Die ursprünglichen 1.4.1-Binaries und spätere Cosmetics-Zweige werden nicht geändert.

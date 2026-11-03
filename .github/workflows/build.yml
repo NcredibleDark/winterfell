@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - build/fabric-random-palette
+      - build/fabric-random-palette-1.4.x
   workflow_dispatch:
 
 permissions:
